@@ -1,0 +1,37 @@
+@startuml Strategy
+title Strategy - Políticas de reembolso
+skinparam classAttributeIconSize 0
+hide empty members
+
+interface ReembolsoStrategy {
+    + calcularReembolso(totalPagado : double) : double
+    + getDescripcion() : String
+}
+class ReembolsoCompleto {
+    + calcularReembolso(totalPagado : double) : double
+}
+class ReembolsoParcial {
+    + {static} PORCENTAJE : double = 80
+    + calcularReembolso(totalPagado : double) : double
+}
+class SinReembolso {
+    + calcularReembolso(totalPagado : double) : double
+}
+class SelectorReembolso {
+    + seleccionar(funcion : Funcion, ahora : LocalDateTime) : ReembolsoStrategy
+}
+class ProcesoCompraFacade
+class Compra {
+    + reembolsar(estrategia : ReembolsoStrategy) : double
+}
+class CancelacionNoPermitidaException
+
+ReembolsoStrategy <|.. ReembolsoCompleto
+ReembolsoStrategy <|.. ReembolsoParcial
+ReembolsoStrategy <|.. SinReembolso
+SelectorReembolso ..> ReembolsoStrategy
+ProcesoCompraFacade "1" --> "1" SelectorReembolso
+ProcesoCompraFacade ..> ReembolsoStrategy
+Compra ..> ReembolsoStrategy
+SinReembolso ..> CancelacionNoPermitidaException
+@enduml

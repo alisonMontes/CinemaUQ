@@ -1,0 +1,44 @@
+@startuml State
+title State - Ciclo de vida de Compra
+skinparam classAttributeIconSize 0
+hide empty members
+
+class Compra {
+    - estado : EstadoCompraState
+    + confirmarPago(medioPago : MedioPago) : void
+    + confirmarCanje(puntosUsados : int) : void
+    + reembolsar(estrategia : ReembolsoStrategy) : double
+    ~ cambiarEstado(nuevo : EstadoCompraState) : void
+    + getEstado() : EstadoCompra
+}
+interface EstadoCompraState {
+    + getValor() : EstadoCompra
+    + pagar(compra : Compra) : void
+    + reembolsar(compra : Compra, estrategia : ReembolsoStrategy) : double
+}
+class CompraPendiente
+class CompraPagada
+class CompraReembolsada
+enum EstadoCompra {
+    PENDIENTE
+    PAGADA
+    REEMBOLSADA
+}
+
+Compra "1" *-- "1" EstadoCompraState
+EstadoCompraState <|.. CompraPendiente
+EstadoCompraState <|.. CompraPagada
+EstadoCompraState <|.. CompraReembolsada
+EstadoCompraState --> EstadoCompra
+@enduml
+
+@startuml StateTransiciones
+title State - Transiciones
+[*] --> PENDIENTE : build()
+PENDIENTE --> PAGADA : pagar()
+PAGADA --> REEMBOLSADA : reembolsar()\n[no pagada con puntos]
+PENDIENTE --> PENDIENTE : reembolsar() / CancelacionNoPermitidaException
+PAGADA --> PAGADA : pagar() / CinemaUQException
+REEMBOLSADA --> REEMBOLSADA : reembolsar() / ReembolsoYaEjecutadoException
+REEMBOLSADA --> [*]
+@enduml

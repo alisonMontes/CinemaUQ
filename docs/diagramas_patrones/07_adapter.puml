@@ -1,0 +1,34 @@
+@startuml Adapter
+title Adapter - TarjetaVirtual como MedioPago
+skinparam classAttributeIconSize 0
+hide empty members
+
+interface MedioPago <<Target>> {
+    + validarPago(monto : double) : void
+    + cobrar(monto : double, concepto : String, fecha : LocalDateTime) : void
+    + reembolsar(monto : double, concepto : String, fecha : LocalDateTime) : void
+    + getDescripcion() : String
+}
+class PagoTarjetaAdapter <<Adapter>> {
+    - tarjeta : TarjetaVirtual
+    + validarPago(monto : double) : void
+    + cobrar(monto : double, concepto : String, fecha : LocalDateTime) : void
+    + reembolsar(monto : double, concepto : String, fecha : LocalDateTime) : void
+    + getDescripcion() : String
+}
+class TarjetaVirtual <<Adaptee>> {
+    - saldo : double
+    - estado : EstadoTarjeta
+    + estaActiva() : boolean
+    + getSaldo() : double
+    + setSaldo(saldo : double) : void
+    + agregarMovimiento(m : MovimientoTarjeta) : void
+}
+class ProcesoCompraFacade <<Client>>
+class Compra
+
+MedioPago <|.. PagoTarjetaAdapter
+PagoTarjetaAdapter "0..*" --> "1" TarjetaVirtual
+ProcesoCompraFacade ..> MedioPago
+Compra "0..*" --> "0..1" MedioPago
+@enduml

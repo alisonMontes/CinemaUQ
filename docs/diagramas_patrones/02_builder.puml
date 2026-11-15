@@ -1,0 +1,39 @@
+@startuml Builder
+title Builder - Construcción de Compra
+skinparam classAttributeIconSize 0
+hide empty members
+
+class Compra {
+    - codigo : String
+    - cliente : Cliente
+    - funcion : Funcion
+    - entradas : List<Entrada>
+    - productos : List<Producto>
+    - combos : List<Combo>
+    - promocion : Promocion
+    - total : double
+    - estado : EstadoCompraState
+    - Compra(builder : Builder, total : double)
+    + getEstado() : EstadoCompra
+}
+class "Compra.Builder" as Builder {
+    + Builder(codigo : String, cliente : Cliente, fecha : LocalDateTime)
+    + funcion(f : Funcion) : Builder
+    + agregarEntrada(e : Entrada) : Builder
+    + agregarProducto(p : Producto) : Builder
+    + agregarCombo(c : Combo) : Builder
+    + promocion(p : Promocion) : Builder
+    + pagadaConPuntos(valor : boolean) : Builder
+    + build() : Compra
+    - validarCompraConTarjeta() : void
+    - validarRedencion() : void
+    - calcularTotal() : double
+}
+class CompraPendiente
+class PromocionDecorator
+
+Compra +-- Builder
+Builder ..> Compra
+Builder ..> PromocionDecorator
+Compra "1" *-- "1" CompraPendiente
+@enduml

@@ -1,0 +1,27 @@
+@startuml Composite
+title Composite - Combo de ItemVendible
+skinparam classAttributeIconSize 0
+hide empty members
+
+interface ItemVendible {
+    + getNombre() : String
+    + getPrecio() : double
+}
+class Producto {
+    - precio : double
+    + getPrecio() : double
+}
+class Combo {
+    - porcentajeDescuento : double
+    - componentes : List<ItemVendible>
+    + agregarComponente(c : ItemVendible) : void
+    + eliminarComponente(c : ItemVendible) : boolean
+    + getPrecioRegular() : double
+    + getPrecio() : double
+    + getComponentes() : List<ItemVendible>
+}
+
+ItemVendible <|.. Producto
+ItemVendible <|.. Combo
+Combo "0..*" o-- "1..*" ItemVendible
+@enduml

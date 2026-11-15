@@ -1,0 +1,37 @@
+@startuml Decorator
+title Decorator - Promociones sobre ItemVendible
+skinparam classAttributeIconSize 0
+hide empty members
+
+interface ItemVendible {
+    + getNombre() : String
+    + getPrecio() : double
+}
+abstract class Entrada
+class Producto
+class Combo
+class Promocion {
+    - porcentajeDescuento : double
+    - fechaInicio : LocalDate
+    - fechaFin : LocalDate
+    + estaVigente(hoy : LocalDate) : boolean
+    + calcularDescuento(monto : double) : double
+}
+class PromocionDecorator {
+    - item : ItemVendible
+    - promocion : Promocion
+    - fecha : LocalDate
+    + aplicaDescuento() : boolean
+    + getNombre() : String
+    + getPrecio() : double
+}
+class "Compra.Builder" as Builder
+
+ItemVendible <|.. Entrada
+ItemVendible <|.. Producto
+ItemVendible <|.. Combo
+ItemVendible <|.. PromocionDecorator
+PromocionDecorator "0..*" --> "1" ItemVendible
+PromocionDecorator "0..*" --> "1" Promocion
+Builder ..> PromocionDecorator
+@enduml

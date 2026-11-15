@@ -1,0 +1,32 @@
+@startuml Facade
+title Facade - ProcesoCompraFacade
+skinparam classAttributeIconSize 0
+hide empty members
+
+class ProcesoCompraFacade {
+    + comprar(compra : Compra, medioPago : MedioPago, ahora : LocalDateTime) : Compra
+    + cancelarCompra(compra : Compra, ahora : LocalDateTime) : double
+    + cancelarFuncion(funcion : Funcion, ahora : LocalDateTime) : List<Compra>
+}
+class "Controladores JavaFX" as Controlador
+class Compra
+class Funcion
+interface MedioPago
+class CuentaPuntos
+class AcumulacionPuntos
+class CinemaUQ
+class SelectorReembolso
+interface ReembolsoStrategy
+class Cliente
+
+Controlador ..> ProcesoCompraFacade
+ProcesoCompraFacade ..> Compra
+ProcesoCompraFacade ..> Funcion
+ProcesoCompraFacade ..> MedioPago
+ProcesoCompraFacade ..> CuentaPuntos
+ProcesoCompraFacade ..> AcumulacionPuntos
+ProcesoCompraFacade ..> Cliente
+ProcesoCompraFacade ..> ReembolsoStrategy
+ProcesoCompraFacade "1" --> "1" CinemaUQ
+ProcesoCompraFacade "1" --> "1" SelectorReembolso
+@enduml

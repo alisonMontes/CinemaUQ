@@ -1,0 +1,22 @@
+@startuml Singleton
+title Singleton - CinemaUQ
+skinparam classAttributeIconSize 0
+hide empty members
+
+class CinemaUQ <<Singleton>> {
+    - {static} instancia : CinemaUQ
+    - consecutivoCompras : int
+    - usuarios : List<Usuario>
+    - peliculas : List<Pelicula>
+    - funciones : List<Funcion>
+    - compras : List<Compra>
+    - CinemaUQ()
+    + {static} getInstancia() : CinemaUQ
+    + reiniciar() : void
+    + generarCodigoCompra() : String
+}
+class ProcesoCompraFacade
+
+CinemaUQ "1" --> "0..1" CinemaUQ
+ProcesoCompraFacade "0..*" --> "1" CinemaUQ
+@enduml

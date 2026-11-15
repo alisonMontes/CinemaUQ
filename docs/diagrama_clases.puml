@@ -1,0 +1,788 @@
+@startuml CinemaUQ
+title CinemaUQ - Diagrama de clases
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+hide empty members
+
+package model {
+
+    abstract class Usuario {
+        - nombre : String
+        - correo : String
+        - clave : String
+        # Usuario(nombre : String, correo : String, clave : String)
+        + verificarClave(clave : String) : boolean
+        + {abstract} getRol() : String
+        + getNombre() : String
+        + setNombre(nombre : String) : void
+        + getCorreo() : String
+        + setCorreo(correo : String) : void
+        + getClave() : String
+        + setClave(clave : String) : void
+        + equals(o : Object) : boolean
+        + hashCode() : int
+        + toString() : String
+    }
+
+    class Cliente {
+        - tarjeta : TarjetaVirtual
+        - cuentaPuntos : CuentaPuntos
+        - compras : List<Compra>
+        - notificaciones : List<String>
+        + Cliente(nombre : String, correo : String, clave : String, tarjeta : TarjetaVirtual)
+        + agregarCompra(compra : Compra) : void
+        + tieneCompraPagadaEn(funcion : Funcion) : boolean
+        + actualizar(funcion : Funcion, mensaje : String) : void
+        + getNotificaciones() : List<String>
+        + getRol() : String
+        + getTarjeta() : TarjetaVirtual
+        + setTarjeta(tarjeta : TarjetaVirtual) : void
+        + getCuentaPuntos() : CuentaPuntos
+        + getCompras() : List<Compra>
+        + toString() : String
+    }
+
+    class Administrador {
+        + Administrador(nombre : String, correo : String, clave : String)
+        + getRol() : String
+    }
+
+    class TarjetaVirtual {
+        - numero : String
+        - saldo : double
+        - estado : EstadoTarjeta
+        - movimientos : List<MovimientoTarjeta>
+        + TarjetaVirtual(numero : String, saldoInicial : double)
+        + estaActiva() : boolean
+        + agregarMovimiento(movimiento : MovimientoTarjeta) : void
+        + getNumero() : String
+        + setNumero(numero : String) : void
+        + getSaldo() : double
+        + setSaldo(saldo : double) : void
+        + getEstado() : EstadoTarjeta
+        + setEstado(estado : EstadoTarjeta) : void
+        + getMovimientos() : List<MovimientoTarjeta>
+        + toString() : String
+    }
+
+    class MovimientoTarjeta {
+        - tipo : TipoMovimiento
+        - fecha : LocalDateTime
+        - monto : double
+        - descripcion : String
+        + MovimientoTarjeta(tipo : TipoMovimiento, fecha : LocalDateTime, monto : double, descripcion : String)
+        + getTipo() : TipoMovimiento
+        + setTipo(tipo : TipoMovimiento) : void
+        + getFecha() : LocalDateTime
+        + setFecha(fecha : LocalDateTime) : void
+        + getMonto() : double
+        + setMonto(monto : double) : void
+        + getDescripcion() : String
+        + setDescripcion(descripcion : String) : void
+        + toString() : String
+    }
+
+    class Pelicula {
+        - codigo : String
+        - titulo : String
+        - genero : String
+        - duracionMinutos : int
+        - clasificacion : String
+        - sinopsis : String
+        - enCartelera : boolean
+        + Pelicula(codigo : String, titulo : String, genero : String, duracionMinutos : int, clasificacion : String, sinopsis : String)
+        + getCodigo() : String
+        + setCodigo(codigo : String) : void
+        + getTitulo() : String
+        + setTitulo(titulo : String) : void
+        + getGenero() : String
+        + setGenero(genero : String) : void
+        + getDuracionMinutos() : int
+        + setDuracionMinutos(duracionMinutos : int) : void
+        + getClasificacion() : String
+        + setClasificacion(clasificacion : String) : void
+        + getSinopsis() : String
+        + setSinopsis(sinopsis : String) : void
+        + isEnCartelera() : boolean
+        + setEnCartelera(enCartelera : boolean) : void
+        + toString() : String
+    }
+
+    class Sala {
+        - codigo : String
+        - nombre : String
+        - asientos : List<Asiento>
+        + Sala(codigo : String, nombre : String)
+        + agregarAsiento(asiento : Asiento) : void
+        + eliminarAsiento(asiento : Asiento) : boolean
+        + buscarAsiento(fila : String, numero : int) : Asiento
+        + contieneAsiento(asiento : Asiento) : boolean
+        + getCapacidad() : int
+        + getCodigo() : String
+        + setCodigo(codigo : String) : void
+        + getNombre() : String
+        + setNombre(nombre : String) : void
+        + getAsientos() : List<Asiento>
+        + toString() : String
+    }
+
+    class Asiento {
+        - fila : String
+        - numero : int
+        - tipo : TipoAsiento
+        + Asiento(fila : String, numero : int, tipo : TipoAsiento)
+        + getCodigo() : String
+        + esAccesible() : boolean
+        + getFila() : String
+        + setFila(fila : String) : void
+        + getNumero() : int
+        + setNumero(numero : int) : void
+        + getTipo() : TipoAsiento
+        + setTipo(tipo : TipoAsiento) : void
+        + toString() : String
+    }
+
+    class Funcion {
+        - codigo : String
+        - pelicula : Pelicula
+        - sala : Sala
+        - fecha : LocalDate
+        - hora : LocalTime
+        - precioBase : double
+        - estado : EstadoFuncion
+        - asientosOcupados : List<Asiento>
+        - observadores : List<ObservadorFuncion>
+        + Funcion(codigo : String, pelicula : Pelicula, sala : Sala, fecha : LocalDate, hora : LocalTime, precioBase : double)
+        + agregarObservador(o : ObservadorFuncion) : void
+        + eliminarObservador(o : ObservadorFuncion) : boolean
+        + notificarObservadores(mensaje : String) : void
+        + cancelar() : void
+        + getObservadores() : List<ObservadorFuncion>
+        + getFechaHora() : LocalDateTime
+        + estaDisponible(asiento : Asiento) : boolean
+        + ocuparAsiento(asiento : Asiento) : void
+        + liberarAsiento(asiento : Asiento) : boolean
+        + getAsientosDisponibles() : List<Asiento>
+        + getCodigo() : String
+        + getPelicula() : Pelicula
+        + getSala() : Sala
+        + getFecha() : LocalDate
+        + getHora() : LocalTime
+        + getPrecioBase() : double
+        + getEstado() : EstadoFuncion
+        + setEstado(estado : EstadoFuncion) : void
+        + getAsientosOcupados() : List<Asiento>
+        + estaDisponibleParaVenta(ahora : LocalDateTime) : boolean
+        + toString() : String
+    }
+
+    interface ItemVendible {
+        + getNombre() : String
+        + getPrecio() : double
+    }
+
+    abstract class Entrada {
+        - funcion : Funcion
+        - asiento : Asiento
+        # Entrada(funcion : Funcion, asiento : Asiento)
+        + {abstract} getTipo() : String
+        + getNombre() : String
+        + getPrecio() : double
+        + getFuncion() : Funcion
+        + setFuncion(funcion : Funcion) : void
+        + getAsiento() : Asiento
+        + setAsiento(asiento : Asiento) : void
+        + toString() : String
+    }
+
+    class EntradaGeneral {
+        + EntradaGeneral(funcion : Funcion, asiento : Asiento)
+        + getTipo() : String
+    }
+
+    class EntradaAccesible {
+        + EntradaAccesible(funcion : Funcion, asiento : Asiento)
+        + getTipo() : String
+    }
+
+    class Producto {
+        - codigo : String
+        - nombre : String
+        - precio : double
+        - descripcion : String
+        + Producto(codigo : String, nombre : String, precio : double, descripcion : String)
+        + getCodigo() : String
+        + getNombre() : String
+        + setNombre(nombre : String) : void
+        + getPrecio() : double
+        + setPrecio(precio : double) : void
+        + getDescripcion() : String
+        + setDescripcion(descripcion : String) : void
+        + toString() : String
+    }
+
+    class Combo {
+        - codigo : String
+        - nombre : String
+        - porcentajeDescuento : double
+        - componentes : List<ItemVendible>
+        + Combo(codigo : String, nombre : String, porcentajeDescuento : double)
+        + agregarComponente(c : ItemVendible) : void
+        + eliminarComponente(c : ItemVendible) : boolean
+        + getPrecioRegular() : double
+        + getPrecio() : double
+        + getAhorro() : double
+        + getCodigo() : String
+        + getNombre() : String
+        + setNombre(nombre : String) : void
+        + getPorcentajeDescuento() : double
+        + setPorcentajeDescuento(p : double) : void
+        + getComponentes() : List<ItemVendible>
+        + toString() : String
+    }
+
+    class Promocion {
+        - codigo : String
+        - nombre : String
+        - porcentajeDescuento : double
+        - fechaInicio : LocalDate
+        - fechaFin : LocalDate
+        + Promocion(codigo : String, nombre : String, porcentajeDescuento : double, fechaInicio : LocalDate, fechaFin : LocalDate)
+        + estaVigente(hoy : LocalDate) : boolean
+        + calcularDescuento(monto : double) : double
+        + getCodigo() : String
+        + getNombre() : String
+        + getPorcentajeDescuento() : double
+        + setPorcentajeDescuento(porcentaje : double) : void
+        + getFechaInicio() : LocalDate
+        + setFechaInicio(fecha : LocalDate) : void
+        + getFechaFin() : LocalDate
+        + setFechaFin(fecha : LocalDate) : void
+        + toString() : String
+    }
+
+    class Compra {
+        - codigo : String
+        - cliente : Cliente
+        - funcion : Funcion
+        - entradas : List<Entrada>
+        - productos : List<Producto>
+        - combos : List<Combo>
+        - promocion : Promocion
+        - total : double
+        - fecha : LocalDateTime
+        - pagadaConPuntos : boolean
+        - estado : EstadoCompraState
+        - medioPago : MedioPago
+        - puntosUsados : int
+        - montoReembolsado : double
+        - Compra(builder : Builder, total : double)
+        + confirmarPago(medioPago : MedioPago) : void
+        + confirmarCanje(puntosUsados : int) : void
+        + reembolsar(estrategia : ReembolsoStrategy) : double
+        ~ cambiarEstado(nuevo : EstadoCompraState) : void
+        ~ setMontoReembolsado(monto : double) : void
+        + getItems() : List<ItemVendible>
+        + calcularSubtotal() : double
+        + getDescuento() : double
+        + getEstado() : EstadoCompra
+        + getCodigo() : String
+        + getCliente() : Cliente
+        + getFuncion() : Funcion
+        + getEntradas() : List<Entrada>
+        + getProductos() : List<Producto>
+        + getCombos() : List<Combo>
+        + getPromocion() : Promocion
+        + getTotal() : double
+        + getFecha() : LocalDateTime
+        + isPagadaConPuntos() : boolean
+        + getMedioPago() : MedioPago
+        + getPuntosUsados() : int
+        + getMontoReembolsado() : double
+        + toString() : String
+    }
+
+    class "Compra.Builder" as CompraBuilder {
+        - codigo : String
+        - cliente : Cliente
+        - fecha : LocalDateTime
+        - funcion : Funcion
+        - entradas : List<Entrada>
+        - productos : List<Producto>
+        - combos : List<Combo>
+        - promocion : Promocion
+        - pagadaConPuntos : boolean
+        + Builder(codigo : String, cliente : Cliente, fecha : LocalDateTime)
+        + funcion(f : Funcion) : Builder
+        + agregarEntrada(e : Entrada) : Builder
+        + agregarProducto(p : Producto) : Builder
+        + agregarCombo(c : Combo) : Builder
+        + promocion(p : Promocion) : Builder
+        + pagadaConPuntos(valor : boolean) : Builder
+        + build() : Compra
+    }
+
+    interface EstadoCompraState {
+        + getValor() : EstadoCompra
+        + pagar(compra : Compra) : void
+        + reembolsar(compra : Compra, estrategia : ReembolsoStrategy) : double
+    }
+
+    class CompraPendiente {
+        + getValor() : EstadoCompra
+        + pagar(compra : Compra) : void
+        + reembolsar(compra : Compra, estrategia : ReembolsoStrategy) : double
+    }
+
+    class CompraPagada {
+        + getValor() : EstadoCompra
+        + pagar(compra : Compra) : void
+        + reembolsar(compra : Compra, estrategia : ReembolsoStrategy) : double
+    }
+
+    class CompraReembolsada {
+        + getValor() : EstadoCompra
+        + pagar(compra : Compra) : void
+        + reembolsar(compra : Compra, estrategia : ReembolsoStrategy) : double
+    }
+
+    class CuentaPuntos {
+        - acumulaciones : List<AcumulacionPuntos>
+        + CuentaPuntos()
+        + agregarAcumulacion(acumulacion : AcumulacionPuntos) : void
+        + getAcumulacionesVigentes(hoy : LocalDate) : List<AcumulacionPuntos>
+        + anularPuntosDe(compra : Compra) : boolean
+        + getPuntosDisponibles(hoy : LocalDate) : int
+        + getAcumulaciones() : List<AcumulacionPuntos>
+        + toString() : String
+    }
+
+    class AcumulacionPuntos {
+        - puntosIniciales : int
+        - puntosDisponibles : int
+        - fechaObtencion : LocalDate
+        - fechaVencimiento : LocalDate
+        - compraOrigen : Compra
+        - anulada : boolean
+        + AcumulacionPuntos(puntosIniciales : int, fechaObtencion : LocalDate, compraOrigen : Compra)
+        + estaVencida(hoy : LocalDate) : boolean
+        + estaSinUsar() : boolean
+        + getPuntosIniciales() : int
+        + getPuntosDisponibles() : int
+        + setPuntosDisponibles(puntos : int) : void
+        + getFechaObtencion() : LocalDate
+        + getFechaVencimiento() : LocalDate
+        + getCompraOrigen() : Compra
+        + isAnulada() : boolean
+        + setAnulada(anulada : boolean) : void
+        + toString() : String
+    }
+
+    class ConfiguracionPuntos <<final>> {
+        + {static} PESOS_POR_PUNTO : double = 100
+        + {static} ANIOS_VIGENCIA : int = 1
+        + {static} PUNTOS_ENTRADA : int = 1000
+        + {static} PUNTOS_PRODUCTO : int = 400
+        + {static} PUNTOS_COMBO : int = 1200
+        - ConfiguracionPuntos()
+        + {static} calcularPuntos(montoPagado : double) : int
+    }
+
+    class CinemaUQ <<Singleton>> {
+        - {static} instancia : CinemaUQ
+        - nombre : String
+        - consecutivoCompras : int
+        - consecutivoTarjetas : int
+        - usuarios : List<Usuario>
+        - peliculas : List<Pelicula>
+        - salas : List<Sala>
+        - funciones : List<Funcion>
+        - productos : List<Producto>
+        - combos : List<Combo>
+        - promociones : List<Promocion>
+        - compras : List<Compra>
+        - CinemaUQ()
+        + {static} getInstancia() : CinemaUQ
+        + reiniciar() : void
+        + generarCodigoCompra() : String
+        + generarNumeroTarjeta() : String
+        + agregarUsuario(usuario : Usuario) : void
+        + buscarUsuarioPorCorreo(correo : String) : Usuario
+        + getClientes() : List<Cliente>
+        + getAdministradores() : List<Administrador>
+        + agregarPelicula(p : Pelicula) : void
+        + eliminarPelicula(p : Pelicula) : boolean
+        + buscarPelicula(codigo : String) : Pelicula
+        + agregarSala(s : Sala) : void
+        + eliminarSala(s : Sala) : boolean
+        + buscarSala(codigo : String) : Sala
+        + agregarFuncion(f : Funcion) : void
+        + eliminarFuncion(f : Funcion) : boolean
+        + buscarFuncion(codigo : String) : Funcion
+        + agregarProducto(p : Producto) : void
+        + eliminarProducto(p : Producto) : boolean
+        + buscarProducto(codigo : String) : Producto
+        + agregarCombo(c : Combo) : void
+        + eliminarCombo(c : Combo) : boolean
+        + buscarCombo(codigo : String) : Combo
+        + agregarPromocion(p : Promocion) : void
+        + eliminarPromocion(p : Promocion) : boolean
+        + buscarPromocion(codigo : String) : Promocion
+        + agregarCompra(c : Compra) : void
+        + buscarCompra(codigo : String) : Compra
+        + getNombre() : String
+        + getUsuarios() : List<Usuario>
+        + getPeliculas() : List<Pelicula>
+        + getSalas() : List<Sala>
+        + getFunciones() : List<Funcion>
+        + getProductos() : List<Producto>
+        + getCombos() : List<Combo>
+        + getPromociones() : List<Promocion>
+        + getCompras() : List<Compra>
+        + toString() : String
+    }
+
+    enum EstadoTarjeta {
+        ACTIVA
+        BLOQUEADA
+    }
+
+    enum TipoMovimiento {
+        RECARGA
+        PAGO
+        REEMBOLSO
+    }
+
+    enum TipoAsiento {
+        NORMAL
+        ACCESIBLE
+    }
+
+    enum EstadoFuncion {
+        PROGRAMADA
+        CANCELADA
+        FINALIZADA
+    }
+
+    enum EstadoCompra {
+        PENDIENTE
+        PAGADA
+        REEMBOLSADA
+    }
+}
+
+package factory {
+    abstract class EntradaFactory {
+        + {abstract} crearEntrada(funcion : Funcion, asiento : Asiento) : Entrada
+        + {static} segunAsiento(asiento : Asiento) : EntradaFactory
+    }
+    class EntradaGeneralFactory {
+        + crearEntrada(funcion : Funcion, asiento : Asiento) : Entrada
+    }
+    class EntradaAccesibleFactory {
+        + crearEntrada(funcion : Funcion, asiento : Asiento) : Entrada
+    }
+}
+
+package decorator {
+    class PromocionDecorator {
+        - item : ItemVendible
+        - promocion : Promocion
+        - fecha : LocalDate
+        + PromocionDecorator(item : ItemVendible, promocion : Promocion, fecha : LocalDate)
+        + aplicaDescuento() : boolean
+        + getNombre() : String
+        + getPrecio() : double
+        + getItem() : ItemVendible
+        + getPromocion() : Promocion
+        + toString() : String
+    }
+}
+
+package adapter {
+    interface MedioPago {
+        + validarPago(monto : double) : void
+        + cobrar(monto : double, concepto : String, fecha : LocalDateTime) : void
+        + reembolsar(monto : double, concepto : String, fecha : LocalDateTime) : void
+        + getDescripcion() : String
+    }
+    class PagoTarjetaAdapter {
+        - tarjeta : TarjetaVirtual
+        + PagoTarjetaAdapter(tarjeta : TarjetaVirtual)
+        + validarPago(monto : double) : void
+        + cobrar(monto : double, concepto : String, fecha : LocalDateTime) : void
+        + reembolsar(monto : double, concepto : String, fecha : LocalDateTime) : void
+        + getDescripcion() : String
+        + getTarjeta() : TarjetaVirtual
+    }
+}
+
+package strategy {
+    interface ReembolsoStrategy {
+        + calcularReembolso(totalPagado : double) : double
+        + getDescripcion() : String
+    }
+    class ReembolsoCompleto {
+        + calcularReembolso(totalPagado : double) : double
+        + getDescripcion() : String
+    }
+    class ReembolsoParcial {
+        + {static} PORCENTAJE : double = 80
+        + calcularReembolso(totalPagado : double) : double
+        + getDescripcion() : String
+    }
+    class SinReembolso {
+        + calcularReembolso(totalPagado : double) : double
+        + getDescripcion() : String
+    }
+    class SelectorReembolso {
+        + {static} LIMITE_REEMBOLSO_COMPLETO : Duration
+        + {static} LIMITE_REEMBOLSO_PARCIAL : Duration
+        + seleccionar(funcion : Funcion, ahora : LocalDateTime) : ReembolsoStrategy
+    }
+}
+
+package observer {
+    interface ObservadorFuncion {
+        + actualizar(funcion : Funcion, mensaje : String) : void
+    }
+}
+
+package facade {
+    class ProcesoCompraFacade {
+        - cinema : CinemaUQ
+        - selectorReembolso : SelectorReembolso
+        + ProcesoCompraFacade()
+        + ProcesoCompraFacade(cinema : CinemaUQ, selector : SelectorReembolso)
+        + comprar(compra : Compra, medioPago : MedioPago, ahora : LocalDateTime) : Compra
+        + cancelarCompra(compra : Compra, ahora : LocalDateTime) : double
+        + cancelarFuncion(funcion : Funcion, ahora : LocalDateTime) : List<Compra>
+        - reembolsar(compra : Compra, estrategia : ReembolsoStrategy, ahora : LocalDateTime) : double
+        - validarFuncionDisponible(funcion : Funcion, ahora : LocalDateTime) : void
+        - validarAsientos(compra : Compra) : void
+        - acumularPuntos(compra : Compra, ahora : LocalDateTime) : void
+    }
+}
+
+package exception {
+    class CinemaUQException {
+        + CinemaUQException(mensaje : String)
+    }
+    class SaldoInsuficienteException
+    class TarjetaInactivaException
+    class AsientoNoDisponibleException
+    class CancelacionNoPermitidaException
+    class ReembolsoYaEjecutadoException
+    class PuntosInsuficientesException
+    class CredencialesInvalidasException
+    class UsuarioYaRegistradoException
+    class TipoAsientoInvalidoException
+    class CompraInvalidaException
+    class PromocionNoVigenteException
+    class AccesoDenegadoException
+    class FuncionNoDisponibleException
+}
+
+package service {
+    class ValidadorAcceso <<final>> {
+        ~ {static} exigirAdministrador(usuario : Usuario) : void
+    }
+    class AutenticacionService {
+        - cinema : CinemaUQ
+        + registrarCliente(nombre : String, correo : String, clave : String) : Cliente
+        + iniciarSesion(correo : String, clave : String) : Usuario
+    }
+    class CarteleraService {
+        - cinema : CinemaUQ
+        + getPeliculasEnCartelera() : List<Pelicula>
+        + getFuncionesDisponibles(pelicula : Pelicula, ahora : LocalDateTime) : List<Funcion>
+        + getAsientosDisponibles(funcion : Funcion) : List<Asiento>
+    }
+    class CompraService {
+        - cinema : CinemaUQ
+        - procesoCompra : ProcesoCompraFacade
+        - puntosService : PuntosService
+        + comprarEntradas(cliente : Cliente, funcion : Funcion, asientos : List<Asiento>, productos : List<Producto>, combos : List<Combo>, promocion : Promocion, ahora : LocalDateTime) : Compra
+        + redimirEntrada(cliente : Cliente, funcion : Funcion, asiento : Asiento, ahora : LocalDateTime) : Compra
+        + redimirProducto(cliente : Cliente, producto : Producto, ahora : LocalDateTime) : Compra
+        + redimirCombo(cliente : Cliente, combo : Combo, ahora : LocalDateTime) : Compra
+        - canjear(builder : Builder, puntos : int, ahora : LocalDateTime) : Compra
+        - exigirFuncionDisponible(funcion : Funcion, ahora : LocalDateTime) : void
+    }
+    class CancelacionService {
+        - procesoCompra : ProcesoCompraFacade
+        - selectorReembolso : SelectorReembolso
+        + consultarPolitica(compra : Compra, ahora : LocalDateTime) : ReembolsoStrategy
+        + cancelarCompra(cliente : Cliente, compra : Compra, ahora : LocalDateTime) : double
+        + cancelarFuncion(actor : Usuario, funcion : Funcion, ahora : LocalDateTime) : List<Compra>
+    }
+    class PuntosService {
+        + getPuntosVigentes(cliente : Cliente, hoy : LocalDate) : int
+        + getAcumulacionesVigentes(cliente : Cliente, hoy : LocalDate) : List<AcumulacionPuntos>
+        + getAcumulacionesVencidas(cliente : Cliente, hoy : LocalDate) : List<AcumulacionPuntos>
+        + getPuntosVencidos(cliente : Cliente, hoy : LocalDate) : int
+        + redimir(cliente : Cliente, puntos : int, hoy : LocalDate) : void
+    }
+    class TarjetaService {
+        + consultarSaldo(cliente : Cliente) : double
+        + consultarMovimientos(cliente : Cliente) : List<MovimientoTarjeta>
+        + recargar(actor : Usuario, cliente : Cliente, monto : double, ahora : LocalDateTime) : void
+        + activar(actor : Usuario, cliente : Cliente) : void
+        + bloquear(actor : Usuario, cliente : Cliente) : void
+    }
+    class AdministracionService {
+        - cinema : CinemaUQ
+        + crearPelicula / actualizarPelicula / eliminarPelicula / listarPeliculas
+        + crearSala / actualizarSala / eliminarSala / listarSalas
+        + agregarAsiento / eliminarAsiento
+        + crearFuncion / actualizarFuncion / eliminarFuncion / listarFunciones
+        + crearProducto / actualizarProducto / eliminarProducto / listarProductos
+        + crearCombo / actualizarCombo / eliminarCombo / listarCombos
+        + crearPromocion / actualizarPromocion / eliminarPromocion / listarPromociones
+        + consultarClientes(actor : Usuario) : List<Cliente>
+        + consultarCompras(actor : Usuario) : List<Compra>
+        + consultarComprasDeCliente(actor : Usuario, cliente : Cliente) : List<Compra>
+        - validarSinCruce(sala : Sala, pelicula : Pelicula, inicio : LocalDateTime, actual : Funcion) : void
+    }
+    class EstadisticaService {
+        - cinema : CinemaUQ
+        + getComprasEnPeriodo(desde : LocalDate, hasta : LocalDate) : List<Compra>
+        + getIngresosNetos(desde : LocalDate, hasta : LocalDate) : double
+        + getVentasPorDia(desde : LocalDate, hasta : LocalDate) : Map<LocalDate, Double>
+        + getOcupacionPorFuncion() : Map<Funcion, Double>
+        + getOcupacionPorSala() : Map<Sala, Double>
+        + getEntradasPorPelicula() : Map<Pelicula, Integer>
+        + getProductosMasVendidos() : Map<Producto, Integer>
+        + getCombosMasVendidos() : Map<Combo, Integer>
+        + getComprasReembolsadas(desde : LocalDate, hasta : LocalDate) : List<Compra>
+        + getTotalReembolsado(desde : LocalDate, hasta : LocalDate) : double
+        + getPuntosRedimidos(desde : LocalDate, hasta : LocalDate) : int
+    }
+    class DatosIniciales <<final>> {
+        + {static} CORREO_ADMIN : String
+        + {static} CLAVE_ADMIN : String
+        + {static} cargar(ahora : LocalDateTime) : void
+    }
+}
+
+' ---------- Herencia y realización ----------
+Usuario <|-- Cliente
+Usuario <|-- Administrador
+ObservadorFuncion <|.. Cliente
+ItemVendible <|.. Entrada
+ItemVendible <|.. Producto
+ItemVendible <|.. Combo
+ItemVendible <|.. PromocionDecorator
+Entrada <|-- EntradaGeneral
+Entrada <|-- EntradaAccesible
+EntradaFactory <|-- EntradaGeneralFactory
+EntradaFactory <|-- EntradaAccesibleFactory
+EstadoCompraState <|.. CompraPendiente
+EstadoCompraState <|.. CompraPagada
+EstadoCompraState <|.. CompraReembolsada
+MedioPago <|.. PagoTarjetaAdapter
+ReembolsoStrategy <|.. ReembolsoCompleto
+ReembolsoStrategy <|.. ReembolsoParcial
+ReembolsoStrategy <|.. SinReembolso
+
+Exception <|-- CinemaUQException
+CinemaUQException <|-- SaldoInsuficienteException
+CinemaUQException <|-- TarjetaInactivaException
+CinemaUQException <|-- AsientoNoDisponibleException
+CinemaUQException <|-- CancelacionNoPermitidaException
+CinemaUQException <|-- ReembolsoYaEjecutadoException
+CinemaUQException <|-- PuntosInsuficientesException
+CinemaUQException <|-- CredencialesInvalidasException
+CinemaUQException <|-- UsuarioYaRegistradoException
+CinemaUQException <|-- TipoAsientoInvalidoException
+CinemaUQException <|-- CompraInvalidaException
+CinemaUQException <|-- PromocionNoVigenteException
+CinemaUQException <|-- AccesoDenegadoException
+CinemaUQException <|-- FuncionNoDisponibleException
+
+' ---------- CinemaUQ ----------
+CinemaUQ "1" o-- "0..*" Usuario
+CinemaUQ "1" o-- "0..*" Pelicula
+CinemaUQ "1" o-- "0..*" Sala
+CinemaUQ "1" o-- "0..*" Funcion
+CinemaUQ "1" o-- "0..*" Producto
+CinemaUQ "1" o-- "0..*" Combo
+CinemaUQ "1" o-- "0..*" Promocion
+CinemaUQ "1" o-- "0..*" Compra
+
+' ---------- Cliente y tarjeta ----------
+Cliente "1" *-- "1" TarjetaVirtual
+Cliente "1" *-- "1" CuentaPuntos
+Cliente "1" -- "0..*" Compra
+TarjetaVirtual "1" *-- "0..*" MovimientoTarjeta
+TarjetaVirtual --> EstadoTarjeta
+MovimientoTarjeta --> TipoMovimiento
+PagoTarjetaAdapter "0..*" --> "1" TarjetaVirtual
+
+' ---------- Salas y funciones ----------
+Sala "1" *-- "1..*" Asiento
+Asiento --> TipoAsiento
+Funcion "0..*" --> "1" Pelicula
+Funcion "0..*" --> "1" Sala
+Funcion "0..*" --> "0..*" Asiento
+Funcion "0..*" o-- "0..*" ObservadorFuncion
+Funcion --> EstadoFuncion
+
+' ---------- Entradas, productos y combos ----------
+Entrada "0..*" --> "1" Funcion
+Entrada "0..*" --> "1" Asiento
+Combo "0..*" o-- "1..*" ItemVendible
+PromocionDecorator "0..*" --> "1" ItemVendible
+PromocionDecorator "0..*" --> "1" Promocion
+EntradaFactory ..> Entrada
+
+' ---------- Compra ----------
+Compra "0..*" --> "0..1" Funcion
+Compra "1" *-- "0..*" Entrada
+Compra "0..*" --> "0..*" Producto
+Compra "0..*" --> "0..*" Combo
+Compra "0..*" --> "0..1" Promocion
+Compra "0..*" --> "0..1" MedioPago
+Compra "1" *-- "1" EstadoCompraState
+Compra +-- CompraBuilder
+CompraBuilder ..> Compra
+CompraBuilder ..> PromocionDecorator
+EstadoCompraState --> EstadoCompra
+EstadoCompraState ..> ReembolsoStrategy
+
+' ---------- Puntos ----------
+CuentaPuntos "1" *-- "0..*" AcumulacionPuntos
+AcumulacionPuntos "0..1" --> "0..1" Compra
+AcumulacionPuntos ..> ConfiguracionPuntos
+
+' ---------- Fachada ----------
+ProcesoCompraFacade "1" --> "1" CinemaUQ
+ProcesoCompraFacade "1" --> "1" SelectorReembolso
+ProcesoCompraFacade ..> MedioPago
+ProcesoCompraFacade ..> ReembolsoStrategy
+SelectorReembolso ..> ReembolsoStrategy
+
+' ---------- Servicios ----------
+CompraService "1" --> "1" ProcesoCompraFacade
+CompraService "1" --> "1" PuntosService
+CompraService ..> EntradaFactory
+CompraService ..> CompraBuilder
+CompraService ..> PagoTarjetaAdapter
+CancelacionService "1" --> "1" ProcesoCompraFacade
+CancelacionService "1" --> "1" SelectorReembolso
+AutenticacionService "1" --> "1" CinemaUQ
+CarteleraService "1" --> "1" CinemaUQ
+AdministracionService "1" --> "1" CinemaUQ
+EstadisticaService "1" --> "1" CinemaUQ
+TarjetaService ..> TarjetaVirtual
+PuntosService ..> CuentaPuntos
+AdministracionService ..> ValidadorAcceso
+TarjetaService ..> ValidadorAcceso
+CancelacionService ..> ValidadorAcceso
+DatosIniciales ..> AutenticacionService
+DatosIniciales ..> TarjetaService
+DatosIniciales ..> AdministracionService
+DatosIniciales ..> CompraService
+DatosIniciales ..> CancelacionService
+
+@enduml

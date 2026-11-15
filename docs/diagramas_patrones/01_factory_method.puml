@@ -1,0 +1,45 @@
+@startuml FactoryMethod
+title Factory Method - Creación de entradas
+skinparam classAttributeIconSize 0
+hide empty members
+
+interface ItemVendible {
+    + getNombre() : String
+    + getPrecio() : double
+}
+abstract class Entrada {
+    - funcion : Funcion
+    - asiento : Asiento
+    + {abstract} getTipo() : String
+}
+class EntradaGeneral {
+    + EntradaGeneral(funcion, asiento)
+    + getTipo() : String
+}
+class EntradaAccesible {
+    + EntradaAccesible(funcion, asiento)
+    + getTipo() : String
+}
+abstract class EntradaFactory {
+    + {abstract} crearEntrada(funcion : Funcion, asiento : Asiento) : Entrada
+    + {static} segunAsiento(asiento : Asiento) : EntradaFactory
+}
+class EntradaGeneralFactory {
+    + crearEntrada(funcion : Funcion, asiento : Asiento) : Entrada
+}
+class EntradaAccesibleFactory {
+    + crearEntrada(funcion : Funcion, asiento : Asiento) : Entrada
+}
+class TipoAsientoInvalidoException
+
+ItemVendible <|.. Entrada
+Entrada <|-- EntradaGeneral
+Entrada <|-- EntradaAccesible
+EntradaFactory <|-- EntradaGeneralFactory
+EntradaFactory <|-- EntradaAccesibleFactory
+EntradaFactory ..> Entrada
+EntradaGeneralFactory ..> EntradaGeneral
+EntradaAccesibleFactory ..> EntradaAccesible
+EntradaGeneral ..> TipoAsientoInvalidoException
+EntradaAccesible ..> TipoAsientoInvalidoException
+@enduml

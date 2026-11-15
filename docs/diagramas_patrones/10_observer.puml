@@ -1,0 +1,31 @@
+@startuml Observer
+title Observer - Cancelación de funciones
+skinparam classAttributeIconSize 0
+hide empty members
+
+interface ObservadorFuncion {
+    + actualizar(funcion : Funcion, mensaje : String) : void
+}
+class Funcion <<Sujeto>> {
+    - observadores : List<ObservadorFuncion>
+    + agregarObservador(o : ObservadorFuncion) : void
+    + eliminarObservador(o : ObservadorFuncion) : boolean
+    + notificarObservadores(mensaje : String) : void
+    + cancelar() : void
+}
+abstract class Usuario
+class Cliente <<Observador>> {
+    - notificaciones : List<String>
+    + actualizar(funcion : Funcion, mensaje : String) : void
+    + getNotificaciones() : List<String>
+}
+class ProcesoCompraFacade {
+    + comprar(...) : Compra
+    + cancelarFuncion(...) : List<Compra>
+}
+
+ObservadorFuncion <|.. Cliente
+Usuario <|-- Cliente
+Funcion "0..*" o-- "0..*" ObservadorFuncion
+ProcesoCompraFacade ..> Funcion
+@enduml
