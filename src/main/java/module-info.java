@@ -3,7 +3,9 @@ module org.example.proyectofinalprogramacion2 {
     requires javafx.fxml;
 
     opens org.example.proyectofinalprogramacion2 to javafx.fxml;
+    opens org.example.proyectofinalprogramacion2.controller to javafx.fxml;
     exports org.example.proyectofinalprogramacion2;
+    exports org.example.proyectofinalprogramacion2.controller;
     exports org.example.proyectofinalprogramacion2.model;
     exports org.example.proyectofinalprogramacion2.exception;
     exports org.example.proyectofinalprogramacion2.factory;

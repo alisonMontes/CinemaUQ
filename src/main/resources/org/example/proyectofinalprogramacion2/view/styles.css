@@ -1,0 +1,162 @@
+/* Estilos de CinemaUQ: colores sobrios, sin animaciones. */
+
+.root {
+    -fx-font-family: "Segoe UI", "Arial", sans-serif;
+    -fx-font-size: 13px;
+    -fx-background-color: #f4f5f7;
+}
+
+.titulo {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1f2d3d;
+}
+
+.subtitulo {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1f2d3d;
+}
+
+.dato {
+    -fx-font-weight: bold;
+}
+
+.total {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.ayuda {
+    -fx-text-fill: #5f6b7a;
+}
+
+.panel {
+    -fx-background-color: white;
+    -fx-padding: 16;
+    -fx-border-color: #d9dde3;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+}
+
+.encabezado {
+    -fx-background-color: #1f2d3d;
+    -fx-padding: 10 16;
+}
+
+.encabezado .label {
+    -fx-text-fill: white;
+}
+
+.mensaje-error {
+    -fx-text-fill: #b02a37;
+}
+
+.mensaje-exito {
+    -fx-text-fill: #2e7d32;
+}
+
+/* Botones */
+
+.button {
+    -fx-padding: 6 14;
+    -fx-background-color: #2f5d8a;
+    -fx-text-fill: white;
+    -fx-background-radius: 3;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #264c71;
+}
+
+.button.boton-secundario {
+    -fx-background-color: #6c757d;
+}
+
+.button.boton-secundario:hover {
+    -fx-background-color: #5a6268;
+}
+
+/* Estado de la tarjeta */
+
+.estado-activa {
+    -fx-text-fill: #2e7d32;
+    -fx-font-weight: bold;
+}
+
+.estado-bloqueada {
+    -fx-text-fill: #b02a37;
+    -fx-font-weight: bold;
+}
+
+/* Mapa de asientos */
+
+.pantalla-sala {
+    -fx-background-color: #cfd8dc;
+    -fx-padding: 4;
+    -fx-alignment: center;
+    -fx-text-fill: #37474f;
+}
+
+.encabezado-asientos {
+    -fx-text-fill: #5f6b7a;
+    -fx-font-weight: bold;
+}
+
+.button.asiento {
+    -fx-min-width: 46;
+    -fx-pref-width: 46;
+    -fx-padding: 4 2;
+    -fx-font-size: 11px;
+    -fx-text-fill: white;
+}
+
+.button.asiento-disponible {
+    -fx-background-color: #4caf50;
+}
+
+.button.asiento-accesible {
+    -fx-background-color: #1e88e5;
+}
+
+.button.asiento-seleccionado {
+    -fx-background-color: #f9a825;
+    -fx-text-fill: #1f2d3d;
+}
+
+.button.asiento-ocupado {
+    -fx-background-color: #9e9e9e;
+}
+
+.button.asiento-ocupado:disabled {
+    -fx-opacity: 0.9;
+}
+
+.button.asiento:hover {
+    -fx-opacity: 0.85;
+}
+
+.leyenda {
+    -fx-min-width: 16;
+    -fx-min-height: 16;
+    -fx-max-width: 16;
+    -fx-max-height: 16;
+    -fx-background-radius: 2;
+}
+
+.leyenda.asiento-disponible {
+    -fx-background-color: #4caf50;
+}
+
+.leyenda.asiento-accesible {
+    -fx-background-color: #1e88e5;
+}
+
+.leyenda.asiento-seleccionado {
+    -fx-background-color: #f9a825;
+}
+
+.leyenda.asiento-ocupado {
+    -fx-background-color: #9e9e9e;
+}

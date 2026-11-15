@@ -2,18 +2,22 @@ package org.example.proyectofinalprogramacion2.service;
 
 import org.example.proyectofinalprogramacion2.model.Asiento;
 import org.example.proyectofinalprogramacion2.model.CinemaUQ;
+import org.example.proyectofinalprogramacion2.model.Combo;
 import org.example.proyectofinalprogramacion2.model.Funcion;
 import org.example.proyectofinalprogramacion2.model.Pelicula;
+import org.example.proyectofinalprogramacion2.model.Producto;
+import org.example.proyectofinalprogramacion2.model.Promocion;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 /**
- * Consultas de cartelera para el cliente.
+ * Consultas de cartelera y catálogo (confitería, combos y promociones vigentes) para el cliente.
  */
-// SRP: solo consulta películas, funciones y asientos disponibles; no vende.
+// SRP: solo consulta películas, funciones, asientos y catálogo; no vende.
 public class CarteleraService {
 
     private final CinemaUQ cinema;
@@ -52,5 +56,26 @@ public class CarteleraService {
 
     public List<Asiento> getAsientosDisponibles(Funcion funcion) {
         return funcion.getAsientosDisponibles();
+    }
+
+    public List<Producto> getProductos() {
+        return cinema.getProductos();
+    }
+
+    public List<Combo> getCombos() {
+        return cinema.getCombos();
+    }
+
+    /**
+     * Promociones que el cliente puede aplicar hoy.
+     */
+    public List<Promocion> getPromocionesVigentes(LocalDate hoy) {
+        List<Promocion> vigentes = new ArrayList<>();
+        for (Promocion promocion : cinema.getPromociones()) {
+            if (promocion.estaVigente(hoy)) {
+                vigentes.add(promocion);
+            }
+        }
+        return vigentes;
     }
 }

@@ -55,7 +55,30 @@ public class CompraService {
         Objects.requireNonNull(funcion, "La función es obligatoria");
         exigirFuncionDisponible(funcion, ahora);
 
-        Compra.Builder builder = new Compra.Builder(cinema.generarCodigoCompra(), cliente, ahora)
+        Compra compra = armarCompra(cinema.generarCodigoCompra(), cliente, funcion, asientos, productos, combos,
+                promocion, ahora);
+        return procesoCompra.comprar(compra, new PagoTarjetaAdapter(cliente.getTarjeta()), ahora);
+    }
+
+    /**
+     * Calcula el total que se cobraría (con la promoción, si se indica) sin registrar la compra,
+     * ocupar asientos ni cobrar. Sirve para mostrar subtotales antes de pagar.
+     *
+     * @param promocion puede ser null
+     */
+    public double calcularTotal(Cliente cliente, Funcion funcion, List<Asiento> asientos,
+                                List<Producto> productos, List<Combo> combos, Promocion promocion,
+                                LocalDateTime ahora) throws CinemaUQException {
+        Objects.requireNonNull(cliente, "El cliente es obligatorio");
+        Objects.requireNonNull(funcion, "La función es obligatoria");
+        return armarCompra("COTIZACION", cliente, funcion, asientos, productos, combos, promocion, ahora)
+                .getTotal();
+    }
+
+    private Compra armarCompra(String codigo, Cliente cliente, Funcion funcion, List<Asiento> asientos,
+                               List<Producto> productos, List<Combo> combos, Promocion promocion,
+                               LocalDateTime ahora) throws CinemaUQException {
+        Compra.Builder builder = new Compra.Builder(codigo, cliente, ahora)
                 .funcion(funcion)
                 .promocion(promocion);
         if (asientos != null) {
@@ -73,8 +96,7 @@ public class CompraService {
                 builder.agregarCombo(combo);
             }
         }
-        Compra compra = builder.build();
-        return procesoCompra.comprar(compra, new PagoTarjetaAdapter(cliente.getTarjeta()), ahora);
+        return builder.build();
     }
 
     // ---------- Redención con puntos ----------

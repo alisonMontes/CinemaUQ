@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.proyectofinalprogramacion2.controller.NotificacionesController"
+      spacing="12">
+    <padding>
+        <Insets top="16" right="16" bottom="16" left="16"/>
+    </padding>
+
+    <Label text="Notificaciones" styleClass="subtitulo"/>
+    <ListView fx:id="listaNotificaciones" VBox.vgrow="ALWAYS">
+        <placeholder>
+            <Label text="No tienes notificaciones"/>
+        </placeholder>
+    </ListView>
+</VBox>

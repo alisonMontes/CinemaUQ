@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.proyectofinalprogramacion2.controller.TarjetaController"
+      spacing="12">
+    <padding>
+        <Insets top="16" right="16" bottom="16" left="16"/>
+    </padding>
+
+    <Label text="Mi tarjeta virtual" styleClass="subtitulo"/>
+    <GridPane hgap="16" vgap="6" styleClass="panel">
+        <Label text="Número:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <Label fx:id="lblNumero" styleClass="dato" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+        <Label text="Saldo:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+        <Label fx:id="lblSaldo" styleClass="total" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+        <Label text="Estado:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+        <Label fx:id="lblEstado" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+    </GridPane>
+    <Label text="Las recargas las realiza el administrador del cine." styleClass="ayuda"/>
+
+    <Label text="Movimientos" styleClass="subtitulo"/>
+    <TableView fx:id="tablaMovimientos" VBox.vgrow="ALWAYS">
+        <placeholder>
+            <Label text="La tarjeta no tiene movimientos"/>
+        </placeholder>
+        <columns>
+            <TableColumn fx:id="colFecha" text="Fecha" prefWidth="130"/>
+            <TableColumn fx:id="colTipo" text="Tipo" prefWidth="100"/>
+            <TableColumn fx:id="colMonto" text="Monto" prefWidth="100"/>
+            <TableColumn fx:id="colDescripcion" text="Descripción" prefWidth="400"/>
+        </columns>
+        <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN"/>
+        </columnResizePolicy>
+    </TableView>
+</VBox>
