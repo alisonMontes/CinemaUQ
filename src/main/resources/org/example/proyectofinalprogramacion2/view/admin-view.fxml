@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.example.proyectofinalprogramacion2.controller.AdminController"
+            prefWidth="1120" prefHeight="720">
+    <top>
+        <HBox styleClass="encabezado" alignment="CENTER_LEFT" spacing="12">
+            <Label text="CinemaUQ" styleClass="subtitulo"/>
+            <Label fx:id="lblBienvenida"/>
+            <Pane HBox.hgrow="ALWAYS"/>
+            <Button text="Cerrar sesión" styleClass="boton-secundario" onAction="#cerrarSesion"/>
+        </HBox>
+    </top>
+    <center>
+        <TabPane fx:id="tabPane" tabClosingPolicy="UNAVAILABLE">
+            <Tab fx:id="tabPeliculas" text="Películas">
+                <fx:include fx:id="peliculas" source="peliculas-admin-tab.fxml"/>
+            </Tab>
+            <Tab fx:id="tabSalas" text="Salas y asientos">
+                <fx:include fx:id="salas" source="salas-admin-tab.fxml"/>
+            </Tab>
+            <Tab fx:id="tabFunciones" text="Funciones">
+                <fx:include fx:id="funciones" source="funciones-admin-tab.fxml"/>
+            </Tab>
+            <Tab fx:id="tabCatalogo" text="Productos y combos">
+                <fx:include fx:id="catalogo" source="catalogo-admin-tab.fxml"/>
+            </Tab>
+            <Tab fx:id="tabPromociones" text="Promociones">
+                <fx:include fx:id="promociones" source="promociones-admin-tab.fxml"/>
+            </Tab>
+            <Tab fx:id="tabClientes" text="Clientes y compras">
+                <fx:include fx:id="clientes" source="clientes-admin-tab.fxml"/>
+            </Tab>
+            <Tab fx:id="tabTarjetas" text="Tarjetas">
+                <fx:include fx:id="tarjetas" source="tarjetas-admin-tab.fxml"/>
+            </Tab>
+            <Tab fx:id="tabCancelarFuncion" text="Cancelar función">
+                <fx:include fx:id="cancelarFuncion" source="cancelar-funcion-admin-tab.fxml"/>
+            </Tab>
+            <Tab fx:id="tabEstadisticas" text="Estadísticas">
+                <fx:include fx:id="estadisticas" source="estadisticas-admin-tab.fxml"/>
+            </Tab>
+        </TabPane>
+    </center>
+</BorderPane>

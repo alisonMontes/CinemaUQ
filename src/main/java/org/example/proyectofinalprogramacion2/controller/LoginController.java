@@ -38,7 +38,9 @@ public class LoginController {
                         NavegadorVistas.ventanaDe(txtCorreo), NavegadorVistas.CLIENTE, "Cliente");
                 controller.initData(usuario);
             } else {
-                lblMensaje.setText("La vista del administrador todavía no está disponible");
+                AdminController controller = NavegadorVistas.cambiarVista(
+                        NavegadorVistas.ventanaDe(txtCorreo), AdminController.VISTA, "Administrador");
+                controller.initData(usuario);
             }
         } catch (CinemaUQException e) {
             lblMensaje.setText(e.getMessage());
