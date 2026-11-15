@@ -160,3 +160,19 @@
 .leyenda.asiento-ocupado {
     -fx-background-color: #9e9e9e;
 }
+
+/* Reportes y gráficos (fase 5B) */
+
+.texto-reporte {
+    -fx-font-family: "Consolas", "Courier New", monospace;
+    -fx-font-size: 12px;
+}
+
+.grafico {
+    -fx-background-color: white;
+    -fx-border-color: #d9dde3;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+    -fx-padding: 8;
+    -fx-pref-height: 320;
+}

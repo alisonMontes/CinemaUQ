@@ -40,6 +40,10 @@ public class AdminController {
     private Tab tabCancelarFuncion;
     @FXML
     private Tab tabEstadisticas;
+    @FXML
+    private Tab tabReportes;
+    @FXML
+    private Tab tabGraficos;
 
     // Controladores de las pestañas incluidas con fx:include (fx:id + "Controller").
     @FXML
@@ -60,6 +64,10 @@ public class AdminController {
     private CancelarFuncionAdminController cancelarFuncionController;
     @FXML
     private EstadisticasAdminController estadisticasController;
+    @FXML
+    private ReportesAdminController reportesController;
+    @FXML
+    private GraficosAdminController graficosController;
 
     private final Map<Tab, PestanaAdmin> pestanas = new HashMap<>();
     private Usuario administrador;
@@ -80,6 +88,8 @@ public class AdminController {
         pestanas.put(tabTarjetas, tarjetasController);
         pestanas.put(tabCancelarFuncion, cancelarFuncionController);
         pestanas.put(tabEstadisticas, estadisticasController);
+        pestanas.put(tabReportes, reportesController);
+        pestanas.put(tabGraficos, graficosController);
         for (PestanaAdmin pestana : pestanas.values()) {
             pestana.inicializar(this);
         }

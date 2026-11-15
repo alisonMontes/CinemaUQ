@@ -48,6 +48,12 @@
             <Tab fx:id="tabEstadisticas" text="Estadísticas">
                 <fx:include fx:id="estadisticas" source="estadisticas-admin-tab.fxml"/>
             </Tab>
+            <Tab fx:id="tabReportes" text="Reportes">
+                <fx:include fx:id="reportes" source="reportes-admin-tab.fxml"/>
+            </Tab>
+            <Tab fx:id="tabGraficos" text="Gráficos">
+                <fx:include fx:id="graficos" source="graficos-admin-tab.fxml"/>
+            </Tab>
         </TabPane>
     </center>
 </BorderPane>
