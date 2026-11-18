@@ -10,7 +10,7 @@
 
 <VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="org.example.proyectofinalprogramacion2.controller.CancelarFuncionAdminController"
-      spacing="8">
+      spacing="10">
     <padding>
         <Insets top="16" right="16" bottom="16" left="16"/>
     </padding>
@@ -22,7 +22,7 @@
             <TableColumn fx:id="colPelicula" text="Película" prefWidth="200"/>
             <TableColumn fx:id="colSala" text="Sala" prefWidth="90"/>
             <TableColumn fx:id="colFechaHora" text="Fecha y hora" prefWidth="130"/>
-            <TableColumn fx:id="colVendidos" text="Asientos vendidos" prefWidth="120"/>
+            <TableColumn fx:id="colVendidos" text="Asientos vendidos" prefWidth="135"/>
             <TableColumn fx:id="colEstado" text="Estado" prefWidth="100"/>
         </columns>
         <columnResizePolicy>
@@ -30,7 +30,7 @@
         </columnResizePolicy>
     </TableView>
     <HBox spacing="10" alignment="CENTER_LEFT">
-        <Button fx:id="btnCancelar" text="Cancelar función" disable="true" onAction="#cancelarFuncion"/>
+        <Button styleClass="btn-peligro" minWidth="-Infinity" fx:id="btnCancelar" text="Cancelar función" disable="true" onAction="#cancelarFuncion"/>
         <Label text="Si el cine cancela la función se devuelve el 100 % de las compras pagadas con tarjeta."
                styleClass="ayuda" wrapText="true"/>
     </HBox>

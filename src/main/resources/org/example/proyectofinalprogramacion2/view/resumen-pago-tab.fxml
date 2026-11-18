@@ -15,7 +15,7 @@
         <Insets top="16" right="16" bottom="16" left="16"/>
     </padding>
 
-    <VBox spacing="8" HBox.hgrow="ALWAYS">
+    <VBox spacing="10" HBox.hgrow="ALWAYS">
         <Label text="Resumen de la compra" styleClass="subtitulo"/>
         <Label fx:id="lblFuncion"/>
         <ListView fx:id="listaDetalle" VBox.vgrow="ALWAYS">
@@ -27,15 +27,15 @@
 
     <VBox spacing="10" prefWidth="360" styleClass="panel">
         <Label text="Promoción vigente (opcional)"/>
-        <HBox spacing="8">
+        <HBox spacing="10">
             <ComboBox fx:id="cmbPromocion" promptText="Sin promoción" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
-            <Button text="Quitar" styleClass="boton-secundario" minWidth="-Infinity" onAction="#quitarPromocion"/>
+            <Button text="Quitar" styleClass="btn-peligro" minWidth="-Infinity" onAction="#quitarPromocion"/>
         </HBox>
         <Label fx:id="lblSubtotal"/>
         <Label fx:id="lblDescuento"/>
         <Label fx:id="lblTotal" styleClass="total"/>
         <Label fx:id="lblSaldo" styleClass="ayuda" wrapText="true"/>
-        <Button fx:id="btnPagar" text="Pagar con mi tarjeta" maxWidth="Infinity" onAction="#pagar"/>
+        <Button styleClass="btn-primario" fx:id="btnPagar" text="Pagar con mi tarjeta" maxWidth="Infinity" onAction="#pagar"/>
         <Label fx:id="lblMensaje" styleClass="mensaje-error" wrapText="true"/>
     </VBox>
 </HBox>

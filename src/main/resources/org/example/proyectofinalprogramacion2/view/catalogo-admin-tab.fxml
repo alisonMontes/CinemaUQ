@@ -18,7 +18,7 @@
         <Insets top="16" right="16" bottom="16" left="16"/>
     </padding>
 
-    <VBox spacing="8" HBox.hgrow="ALWAYS">
+    <VBox spacing="10" HBox.hgrow="ALWAYS">
         <Label text="Productos" styleClass="subtitulo"/>
         <TableView fx:id="tablaProductos" VBox.vgrow="ALWAYS">
             <columns>
@@ -33,27 +33,27 @@
         </TableView>
         <VBox spacing="6" styleClass="panel">
             <Label text="Nuevo producto" styleClass="dato"/>
-            <HBox spacing="8">
+            <HBox spacing="10">
                 <TextField fx:id="txtProductoCodigo" promptText="Código (PR07)" prefWidth="110"/>
                 <TextField fx:id="txtProductoNombre" promptText="Nombre" HBox.hgrow="ALWAYS"/>
                 <TextField fx:id="txtProductoPrecio" promptText="Precio" prefWidth="90"/>
             </HBox>
-            <HBox spacing="8">
+            <HBox spacing="10">
                 <TextField fx:id="txtProductoDescripcion" promptText="Descripción" HBox.hgrow="ALWAYS"/>
-                <Button text="Crear producto" minWidth="-Infinity" onAction="#crearProducto"/>
+                <Button styleClass="btn-primario" text="Crear producto" minWidth="-Infinity" onAction="#crearProducto"/>
             </HBox>
         </VBox>
         <Label fx:id="lblMensaje" styleClass="mensaje-exito" wrapText="true"/>
     </VBox>
 
-    <VBox spacing="8" HBox.hgrow="ALWAYS">
+    <VBox spacing="10" HBox.hgrow="ALWAYS">
         <Label text="Combos" styleClass="subtitulo"/>
         <TableView fx:id="tablaCombos" VBox.vgrow="ALWAYS">
             <columns>
                 <TableColumn fx:id="colComboCodigo" text="Código" prefWidth="60"/>
                 <TableColumn fx:id="colComboNombre" text="Nombre" prefWidth="120"/>
                 <TableColumn fx:id="colComboContenido" text="Componentes" prefWidth="170"/>
-                <TableColumn fx:id="colComboDescuento" text="Desc." prefWidth="55"/>
+                <TableColumn fx:id="colComboDescuento" text="Desc." prefWidth="60"/>
                 <TableColumn fx:id="colComboPrecio" text="Precio" prefWidth="75"/>
             </columns>
             <columnResizePolicy>
@@ -62,16 +62,16 @@
         </TableView>
         <VBox spacing="6" styleClass="panel">
             <Label text="Nuevo combo" styleClass="dato"/>
-            <HBox spacing="8">
+            <HBox spacing="10">
                 <TextField fx:id="txtComboCodigo" promptText="Código (CB04)" prefWidth="110"/>
                 <TextField fx:id="txtComboNombre" promptText="Nombre" HBox.hgrow="ALWAYS"/>
                 <TextField fx:id="txtComboDescuento" promptText="Descuento %" prefWidth="100"/>
             </HBox>
-            <HBox spacing="8">
+            <HBox spacing="10">
                 <ComboBox fx:id="cmbComponente" promptText="Producto o combo" HBox.hgrow="ALWAYS"
                           maxWidth="Infinity"/>
-                <Button text="Agregar" minWidth="-Infinity" onAction="#agregarComponente"/>
-                <Button text="Quitar" styleClass="boton-secundario" minWidth="-Infinity"
+                <Button styleClass="btn-primario" text="Agregar" minWidth="-Infinity" onAction="#agregarComponente"/>
+                <Button text="Quitar" styleClass="btn-peligro" minWidth="-Infinity"
                         onAction="#quitarComponente"/>
             </HBox>
             <ListView fx:id="listaComponentes" prefHeight="90">
@@ -79,7 +79,7 @@
                     <Label text="Agrega los componentes del combo"/>
                 </placeholder>
             </ListView>
-            <Button text="Crear combo" onAction="#crearCombo"/>
+            <Button styleClass="btn-primario" minWidth="-Infinity" text="Crear combo" onAction="#crearCombo"/>
         </VBox>
     </VBox>
 </HBox>

@@ -8,7 +8,7 @@
 
 <VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="org.example.proyectofinalprogramacion2.controller.ClientesAdminController"
-      spacing="8">
+      spacing="10">
     <padding>
         <Insets top="16" right="16" bottom="16" left="16"/>
     </padding>
@@ -20,7 +20,7 @@
             <TableColumn fx:id="colCorreo" text="Correo" prefWidth="190"/>
             <TableColumn fx:id="colTarjeta" text="Tarjeta" prefWidth="90"/>
             <TableColumn fx:id="colSaldo" text="Saldo" prefWidth="100"/>
-            <TableColumn fx:id="colEstadoTarjeta" text="Estado tarjeta" prefWidth="100"/>
+            <TableColumn fx:id="colEstadoTarjeta" text="Estado tarjeta" prefWidth="115"/>
             <TableColumn fx:id="colCompras" text="Compras" prefWidth="70"/>
         </columns>
         <columnResizePolicy>

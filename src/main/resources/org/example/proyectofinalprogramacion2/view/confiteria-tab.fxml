@@ -16,7 +16,7 @@
         <Insets top="16" right="16" bottom="16" left="16"/>
     </padding>
 
-    <VBox spacing="8" HBox.hgrow="ALWAYS">
+    <VBox spacing="10" HBox.hgrow="ALWAYS">
         <Label text="Productos" styleClass="subtitulo"/>
         <TableView fx:id="tablaProductos" VBox.vgrow="ALWAYS">
             <columns>
@@ -28,7 +28,7 @@
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN"/>
             </columnResizePolicy>
         </TableView>
-        <Button text="Agregar producto" onAction="#agregarProducto"/>
+        <Button styleClass="btn-primario" minWidth="-Infinity" text="Agregar producto" onAction="#agregarProducto"/>
 
         <Label text="Combos" styleClass="subtitulo"/>
         <TableView fx:id="tablaCombos" VBox.vgrow="ALWAYS">
@@ -42,10 +42,10 @@
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN"/>
             </columnResizePolicy>
         </TableView>
-        <Button text="Agregar combo" onAction="#agregarCombo"/>
+        <Button styleClass="btn-primario" minWidth="-Infinity" text="Agregar combo" onAction="#agregarCombo"/>
     </VBox>
 
-    <VBox spacing="8" prefWidth="340">
+    <VBox spacing="10" prefWidth="340">
         <Label text="Tu carrito de confitería" styleClass="subtitulo"/>
         <TableView fx:id="tablaCarrito" VBox.vgrow="ALWAYS">
             <placeholder>
@@ -61,9 +61,9 @@
         </TableView>
         <Label fx:id="lblMensaje" styleClass="mensaje-error"/>
         <HBox spacing="10">
-            <Button text="Quitar" styleClass="boton-secundario" onAction="#quitarItem"/>
+            <Button text="Quitar" styleClass="btn-peligro" minWidth="-Infinity" onAction="#quitarItem"/>
             <Region HBox.hgrow="ALWAYS"/>
-            <Button text="Ir al resumen" onAction="#irAResumen"/>
+            <Button styleClass="btn-primario" minWidth="-Infinity" text="Ir al resumen" onAction="#irAResumen"/>
         </HBox>
     </VBox>
 </HBox>

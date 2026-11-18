@@ -49,7 +49,7 @@
         <Label fx:id="lblSubtotal" styleClass="total"/>
         <Region HBox.hgrow="ALWAYS"/>
         <Label fx:id="lblMensaje" styleClass="mensaje-error"/>
-        <Button text="Limpiar selección" styleClass="boton-secundario" onAction="#limpiarSeleccion"/>
-        <Button text="Continuar a confitería" onAction="#continuar"/>
+        <Button text="Limpiar selección" styleClass="btn-secundario" minWidth="-Infinity" onAction="#limpiarSeleccion"/>
+        <Button styleClass="btn-primario" minWidth="-Infinity" text="Continuar a confitería" onAction="#continuar"/>
     </HBox>
 </VBox>

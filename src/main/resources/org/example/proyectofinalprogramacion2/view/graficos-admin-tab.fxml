@@ -17,12 +17,12 @@
         <Insets top="16" right="16" bottom="16" left="16"/>
     </padding>
 
-    <HBox spacing="8" alignment="CENTER_LEFT" styleClass="panel">
+    <HBox spacing="10" alignment="CENTER_LEFT" styleClass="panel">
         <Label text="Desde"/>
         <DatePicker fx:id="dpDesde" prefWidth="130"/>
         <Label text="Hasta"/>
         <DatePicker fx:id="dpHasta" prefWidth="130"/>
-        <Button text="Actualizar gráficos" onAction="#actualizar"/>
+        <Button styleClass="btn-primario" minWidth="-Infinity" text="Actualizar gráficos" onAction="#actualizar"/>
         <Label text="Ventas y entradas por fecha de compra; ocupación por fecha de la función."
                styleClass="ayuda" wrapText="true"/>
     </HBox>

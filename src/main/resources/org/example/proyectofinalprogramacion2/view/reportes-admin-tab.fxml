@@ -16,15 +16,15 @@
         <Insets top="16" right="16" bottom="16" left="16"/>
     </padding>
 
-    <HBox spacing="8" alignment="CENTER_LEFT" styleClass="panel">
+    <HBox spacing="10" alignment="CENTER_LEFT" styleClass="panel">
         <Label text="Reporte"/>
         <ComboBox fx:id="cmbTipo" prefWidth="250"/>
         <Label text="Desde"/>
         <DatePicker fx:id="dpDesde" prefWidth="130"/>
         <Label text="Hasta"/>
         <DatePicker fx:id="dpHasta" prefWidth="130"/>
-        <Button text="Generar" onAction="#generar"/>
-        <Button text="Exportar TXT" onAction="#exportar"/>
+        <Button styleClass="btn-primario" minWidth="-Infinity" text="Generar" onAction="#generar"/>
+        <Button styleClass="btn-secundario" minWidth="-Infinity" text="Exportar TXT" onAction="#exportar"/>
     </HBox>
 
     <TextArea fx:id="txtReporte" styleClass="texto-reporte" editable="false" VBox.vgrow="ALWAYS"

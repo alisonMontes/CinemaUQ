@@ -19,12 +19,12 @@
         <Insets top="16" right="16" bottom="16" left="16"/>
     </padding>
 
-    <HBox spacing="8" alignment="CENTER_LEFT">
+    <HBox spacing="10" alignment="CENTER_LEFT">
         <Label text="Periodo de ventas: desde"/>
         <DatePicker fx:id="dpDesde" prefWidth="130"/>
         <Label text="hasta"/>
         <DatePicker fx:id="dpHasta" prefWidth="130"/>
-        <Button text="Calcular" onAction="#calcular"/>
+        <Button styleClass="btn-primario" minWidth="-Infinity" text="Calcular" onAction="#calcular"/>
     </HBox>
 
     <HBox spacing="32" styleClass="panel">

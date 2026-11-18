@@ -17,13 +17,13 @@
         <Insets top="16" right="16" bottom="16" left="16"/>
     </padding>
 
-    <VBox spacing="8" HBox.hgrow="ALWAYS">
+    <VBox spacing="10" HBox.hgrow="ALWAYS">
         <Label text="Salas" styleClass="subtitulo"/>
         <TableView fx:id="tablaSalas" VBox.vgrow="ALWAYS">
             <columns>
                 <TableColumn fx:id="colSalaCodigo" text="Código" prefWidth="70"/>
                 <TableColumn fx:id="colSalaNombre" text="Nombre" prefWidth="150"/>
-                <TableColumn fx:id="colSalaCapacidad" text="Asientos" prefWidth="80"/>
+                <TableColumn fx:id="colSalaCapacidad" text="Asientos" prefWidth="85"/>
             </columns>
             <columnResizePolicy>
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN"/>
@@ -31,16 +31,16 @@
         </TableView>
         <VBox spacing="6" styleClass="panel">
             <Label text="Nueva sala" styleClass="dato"/>
-            <HBox spacing="8" alignment="CENTER_LEFT">
+            <HBox spacing="10" alignment="CENTER_LEFT">
                 <TextField fx:id="txtSalaCodigo" promptText="Código (S04)" prefWidth="110"/>
                 <TextField fx:id="txtSalaNombre" promptText="Nombre" HBox.hgrow="ALWAYS"/>
-                <Button text="Crear sala" minWidth="-Infinity" onAction="#crearSala"/>
+                <Button styleClass="btn-primario" text="Crear sala" minWidth="-Infinity" onAction="#crearSala"/>
             </HBox>
         </VBox>
         <Label fx:id="lblMensaje" styleClass="mensaje-exito" wrapText="true"/>
     </VBox>
 
-    <VBox spacing="8" HBox.hgrow="ALWAYS">
+    <VBox spacing="10" HBox.hgrow="ALWAYS">
         <Label fx:id="lblSalaElegida" styleClass="subtitulo"/>
         <TableView fx:id="tablaAsientos" VBox.vgrow="ALWAYS">
             <columns>
@@ -55,12 +55,12 @@
         </TableView>
         <VBox spacing="6" styleClass="panel">
             <Label text="Agregar asiento a la sala seleccionada" styleClass="dato"/>
-            <HBox spacing="8" alignment="CENTER_LEFT">
+            <HBox spacing="10" alignment="CENTER_LEFT">
                 <TextField fx:id="txtFila" promptText="Fila (A)" prefWidth="80"/>
                 <TextField fx:id="txtNumero" promptText="Número" prefWidth="80"/>
                 <ComboBox fx:id="cmbTipo" prefWidth="120"/>
-                <Button text="Agregar" minWidth="-Infinity" onAction="#agregarAsiento"/>
-                <Button text="Eliminar seleccionado" styleClass="boton-secundario" minWidth="-Infinity"
+                <Button styleClass="btn-primario" text="Agregar" minWidth="-Infinity" onAction="#agregarAsiento"/>
+                <Button text="Eliminar seleccionado" styleClass="btn-peligro" minWidth="-Infinity"
                         onAction="#eliminarAsiento"/>
             </HBox>
         </VBox>

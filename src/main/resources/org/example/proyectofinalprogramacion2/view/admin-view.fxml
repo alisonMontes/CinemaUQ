@@ -16,7 +16,7 @@
             <Label text="CinemaUQ" styleClass="subtitulo"/>
             <Label fx:id="lblBienvenida"/>
             <Pane HBox.hgrow="ALWAYS"/>
-            <Button text="Cerrar sesión" styleClass="boton-secundario" onAction="#cerrarSesion"/>
+            <Button text="Cerrar sesión" styleClass="btn-secundario" minWidth="-Infinity" onAction="#cerrarSesion"/>
         </HBox>
     </top>
     <center>

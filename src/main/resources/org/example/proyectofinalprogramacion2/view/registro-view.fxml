@@ -10,7 +10,7 @@
 
 <VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="org.example.proyectofinalprogramacion2.controller.RegistroController"
-      alignment="CENTER" spacing="14" prefWidth="440" prefHeight="520">
+      alignment="CENTER" spacing="14" prefWidth="440" prefHeight="590">
     <padding>
         <Insets top="24" right="40" bottom="24" left="40"/>
     </padding>
@@ -18,7 +18,7 @@
     <Label text="CinemaUQ" styleClass="titulo"/>
     <Label text="Registro de cliente" styleClass="subtitulo"/>
 
-    <VBox spacing="6" styleClass="panel">
+    <VBox spacing="8" styleClass="panel, tarjeta-login" maxWidth="340">
         <Label text="Nombre completo"/>
         <TextField fx:id="txtNombre"/>
         <Label text="Correo"/>
@@ -31,9 +31,13 @@
             <VBox.margin>
                 <Insets top="8"/>
             </VBox.margin>
-            <Button text="Volver" styleClass="boton-secundario" cancelButton="true" onAction="#volver"/>
-            <Button text="Registrarme" defaultButton="true" onAction="#registrar"/>
+            <Button text="Volver" styleClass="btn-secundario" minWidth="-Infinity" cancelButton="true" onAction="#volver"/>
+            <Button styleClass="btn-primario" minWidth="-Infinity" text="Registrarme" defaultButton="true" onAction="#registrar"/>
         </HBox>
-        <Label fx:id="lblMensaje" styleClass="mensaje-error" wrapText="true"/>
+        <Label fx:id="lblMensaje" styleClass="mensaje-error" wrapText="true" minHeight="36">
+            <VBox.margin>
+                <Insets top="4"/>
+            </VBox.margin>
+        </Label>
     </VBox>
 </VBox>

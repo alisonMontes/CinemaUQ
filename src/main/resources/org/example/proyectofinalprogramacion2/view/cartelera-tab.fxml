@@ -15,14 +15,14 @@
         <Insets top="16" right="16" bottom="16" left="16"/>
     </padding>
 
-    <VBox spacing="8" HBox.hgrow="ALWAYS">
+    <VBox spacing="10" HBox.hgrow="ALWAYS">
         <Label text="Películas en cartelera" styleClass="subtitulo"/>
         <TableView fx:id="tablaPeliculas" VBox.vgrow="ALWAYS">
             <columns>
                 <TableColumn fx:id="colTitulo" text="Título" prefWidth="170"/>
                 <TableColumn fx:id="colGenero" text="Género" prefWidth="110"/>
-                <TableColumn fx:id="colDuracion" text="Duración" prefWidth="70"/>
-                <TableColumn fx:id="colClasificacion" text="Clasificación" prefWidth="90"/>
+                <TableColumn fx:id="colDuracion" text="Duración" prefWidth="80"/>
+                <TableColumn fx:id="colClasificacion" text="Clasificación" prefWidth="105"/>
             </columns>
             <columnResizePolicy>
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN"/>
@@ -31,7 +31,7 @@
         <Label fx:id="lblSinopsis" wrapText="true" styleClass="ayuda"/>
     </VBox>
 
-    <VBox spacing="8" HBox.hgrow="ALWAYS">
+    <VBox spacing="10" HBox.hgrow="ALWAYS">
         <Label text="Funciones disponibles" styleClass="subtitulo"/>
         <TableView fx:id="tablaFunciones" VBox.vgrow="ALWAYS">
             <placeholder>
@@ -41,14 +41,14 @@
                 <TableColumn fx:id="colFechaHora" text="Fecha y hora" prefWidth="130"/>
                 <TableColumn fx:id="colSala" text="Sala" prefWidth="90"/>
                 <TableColumn fx:id="colPrecio" text="Entrada" prefWidth="80"/>
-                <TableColumn fx:id="colDisponibles" text="Asientos libres" prefWidth="100"/>
+                <TableColumn fx:id="colDisponibles" text="Asientos libres" prefWidth="115"/>
             </columns>
             <columnResizePolicy>
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN"/>
             </columnResizePolicy>
         </TableView>
         <HBox spacing="10" alignment="CENTER_LEFT">
-            <Button text="Elegir función" onAction="#elegirFuncion"/>
+            <Button styleClass="btn-primario" minWidth="-Infinity" text="Elegir función" onAction="#elegirFuncion"/>
             <Label fx:id="lblMensaje" styleClass="mensaje-error"/>
         </HBox>
     </VBox>

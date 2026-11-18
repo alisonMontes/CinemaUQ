@@ -16,7 +16,7 @@
         <Insets top="16" right="16" bottom="16" left="16"/>
     </padding>
 
-    <VBox spacing="8" prefWidth="460">
+    <VBox spacing="10" prefWidth="460">
         <Label text="Tarjetas de los clientes" styleClass="subtitulo"/>
         <TableView fx:id="tablaClientes" VBox.vgrow="ALWAYS">
             <columns>
@@ -31,16 +31,16 @@
         </TableView>
     </VBox>
 
-    <VBox spacing="8" HBox.hgrow="ALWAYS">
-        <VBox spacing="8" styleClass="panel">
+    <VBox spacing="10" HBox.hgrow="ALWAYS">
+        <VBox spacing="10" styleClass="panel">
             <Label fx:id="lblClienteElegido" styleClass="dato" wrapText="true"/>
-            <HBox spacing="8" alignment="CENTER_LEFT">
+            <HBox spacing="10" alignment="CENTER_LEFT">
                 <TextField fx:id="txtMonto" promptText="Monto a recargar" prefWidth="150"/>
-                <Button text="Recargar" onAction="#recargar"/>
+                <Button styleClass="btn-primario" minWidth="-Infinity" text="Recargar" onAction="#recargar"/>
             </HBox>
-            <HBox spacing="8">
-                <Button text="Activar tarjeta" onAction="#activar"/>
-                <Button text="Bloquear tarjeta" styleClass="boton-secundario" onAction="#bloquear"/>
+            <HBox spacing="10">
+                <Button styleClass="btn-primario" minWidth="-Infinity" text="Activar tarjeta" onAction="#activar"/>
+                <Button text="Bloquear tarjeta" styleClass="btn-peligro" minWidth="-Infinity" onAction="#bloquear"/>
             </HBox>
             <Label fx:id="lblMensaje" styleClass="mensaje-exito" wrapText="true"/>
         </VBox>

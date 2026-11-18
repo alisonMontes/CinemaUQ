@@ -36,7 +36,7 @@
     <Label text="Cancelación: más de 24 h antes de la función, 100 %; entre 2 y 24 h, 80 %; menos de 2 h, no se permite. Los canjes con puntos no se cancelan."
            styleClass="ayuda" wrapText="true"/>
     <HBox spacing="10" alignment="CENTER_LEFT">
-        <Button fx:id="btnCancelar" text="Cancelar compra" disable="true" onAction="#cancelarCompra"/>
+        <Button styleClass="btn-peligro" minWidth="-Infinity" fx:id="btnCancelar" text="Cancelar compra" disable="true" onAction="#cancelarCompra"/>
         <Label fx:id="lblMensaje" styleClass="mensaje-error"/>
     </HBox>
 </VBox>

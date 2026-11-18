@@ -18,7 +18,7 @@
         <Insets top="16" right="16" bottom="16" left="16"/>
     </padding>
 
-    <VBox spacing="8" HBox.hgrow="ALWAYS">
+    <VBox spacing="10" HBox.hgrow="ALWAYS">
         <Label text="Funciones" styleClass="subtitulo"/>
         <TableView fx:id="tablaFunciones" VBox.vgrow="ALWAYS">
             <columns>
@@ -27,7 +27,7 @@
                 <TableColumn fx:id="colSala" text="Sala" prefWidth="80"/>
                 <TableColumn fx:id="colFechaHora" text="Fecha y hora" prefWidth="120"/>
                 <TableColumn fx:id="colPrecio" text="Precio" prefWidth="75"/>
-                <TableColumn fx:id="colOcupados" text="Vendidos" prefWidth="75"/>
+                <TableColumn fx:id="colOcupados" text="Vendidos" prefWidth="85"/>
                 <TableColumn fx:id="colEstado" text="Estado" prefWidth="95"/>
             </columns>
             <columnResizePolicy>
@@ -35,7 +35,7 @@
             </columnResizePolicy>
         </TableView>
         <HBox spacing="10" alignment="CENTER_LEFT">
-            <Button text="Eliminar función" styleClass="boton-secundario" onAction="#eliminar"/>
+            <Button text="Eliminar función" styleClass="btn-peligro" minWidth="-Infinity" onAction="#eliminar"/>
             <Label text="Solo se eliminan funciones sin compras; las demás se cancelan en la pestaña Cancelar función."
                    styleClass="ayuda" wrapText="true"/>
         </HBox>
@@ -55,7 +55,7 @@
         <TextField fx:id="txtHora" promptText="19:30"/>
         <Label text="Precio base"/>
         <TextField fx:id="txtPrecio" promptText="18000"/>
-        <Button text="Crear función" maxWidth="Infinity" onAction="#crear">
+        <Button styleClass="btn-primario" text="Crear función" maxWidth="Infinity" onAction="#crear">
             <VBox.margin>
                 <Insets top="8"/>
             </VBox.margin>

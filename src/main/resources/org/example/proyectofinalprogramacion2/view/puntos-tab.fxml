@@ -36,9 +36,9 @@
                 <Label text="Aún no tienes puntos"/>
             </placeholder>
             <columns>
-                <TableColumn fx:id="colObtencion" text="Obtenidos el" prefWidth="100"/>
+                <TableColumn fx:id="colObtencion" text="Obtenidos el" prefWidth="105"/>
                 <TableColumn fx:id="colIniciales" text="Puntos" prefWidth="70"/>
-                <TableColumn fx:id="colDisponibles" text="Disponibles" prefWidth="85"/>
+                <TableColumn fx:id="colDisponibles" text="Disponibles" prefWidth="95"/>
                 <TableColumn fx:id="colVencimiento" text="Vencen el" prefWidth="100"/>
                 <TableColumn fx:id="colEstado" text="Estado" prefWidth="80"/>
             </columns>
@@ -54,19 +54,19 @@
         <VBox spacing="6" styleClass="panel">
             <Label fx:id="lblCostoEntrada" styleClass="dato"/>
             <Label fx:id="lblEntrada" wrapText="true" styleClass="ayuda"/>
-            <Button text="Canjear entrada" onAction="#canjearEntrada"/>
+            <Button styleClass="btn-primario" minWidth="-Infinity" text="Canjear entrada" onAction="#canjearEntrada"/>
         </VBox>
 
         <VBox spacing="6" styleClass="panel">
             <Label fx:id="lblCostoProducto" styleClass="dato"/>
             <ComboBox fx:id="cmbProducto" promptText="Elige un producto" maxWidth="Infinity"/>
-            <Button text="Canjear producto" onAction="#canjearProducto"/>
+            <Button styleClass="btn-primario" minWidth="-Infinity" text="Canjear producto" onAction="#canjearProducto"/>
         </VBox>
 
         <VBox spacing="6" styleClass="panel">
             <Label fx:id="lblCostoCombo" styleClass="dato"/>
             <ComboBox fx:id="cmbCombo" promptText="Elige un combo" maxWidth="Infinity"/>
-            <Button text="Canjear combo" onAction="#canjearCombo"/>
+            <Button styleClass="btn-primario" minWidth="-Infinity" text="Canjear combo" onAction="#canjearCombo"/>
         </VBox>
     </VBox>
 </HBox>

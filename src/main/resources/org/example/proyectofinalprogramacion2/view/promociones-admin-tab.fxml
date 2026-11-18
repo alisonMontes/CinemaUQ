@@ -17,16 +17,16 @@
         <Insets top="16" right="16" bottom="16" left="16"/>
     </padding>
 
-    <VBox spacing="8" HBox.hgrow="ALWAYS">
+    <VBox spacing="10" HBox.hgrow="ALWAYS">
         <Label text="Promociones" styleClass="subtitulo"/>
         <TableView fx:id="tablaPromociones" VBox.vgrow="ALWAYS">
             <columns>
                 <TableColumn fx:id="colCodigo" text="Código" prefWidth="60"/>
                 <TableColumn fx:id="colNombre" text="Nombre" prefWidth="180"/>
-                <TableColumn fx:id="colPorcentaje" text="Descuento" prefWidth="80"/>
+                <TableColumn fx:id="colPorcentaje" text="Descuento" prefWidth="90"/>
                 <TableColumn fx:id="colInicio" text="Desde" prefWidth="95"/>
                 <TableColumn fx:id="colFin" text="Hasta" prefWidth="95"/>
-                <TableColumn fx:id="colVigente" text="Vigente hoy" prefWidth="85"/>
+                <TableColumn fx:id="colVigente" text="Vigente hoy" prefWidth="100"/>
             </columns>
             <columnResizePolicy>
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN"/>
@@ -46,7 +46,7 @@
         <DatePicker fx:id="dpInicio" maxWidth="Infinity"/>
         <Label text="Vigente hasta (inclusive)"/>
         <DatePicker fx:id="dpFin" maxWidth="Infinity"/>
-        <Button text="Crear promoción" maxWidth="Infinity" onAction="#crear">
+        <Button styleClass="btn-primario" text="Crear promoción" maxWidth="Infinity" onAction="#crear">
             <VBox.margin>
                 <Insets top="8"/>
             </VBox.margin>

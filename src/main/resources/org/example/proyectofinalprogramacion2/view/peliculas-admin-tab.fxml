@@ -19,16 +19,16 @@
         <Insets top="16" right="16" bottom="16" left="16"/>
     </padding>
 
-    <VBox spacing="8" HBox.hgrow="ALWAYS">
+    <VBox spacing="10" HBox.hgrow="ALWAYS">
         <Label text="Películas" styleClass="subtitulo"/>
         <TableView fx:id="tablaPeliculas" VBox.vgrow="ALWAYS">
             <columns>
                 <TableColumn fx:id="colCodigo" text="Código" prefWidth="60"/>
                 <TableColumn fx:id="colTitulo" text="Título" prefWidth="170"/>
                 <TableColumn fx:id="colGenero" text="Género" prefWidth="110"/>
-                <TableColumn fx:id="colDuracion" text="Duración" prefWidth="70"/>
-                <TableColumn fx:id="colClasificacion" text="Clasificación" prefWidth="90"/>
-                <TableColumn fx:id="colEnCartelera" text="En cartelera" prefWidth="80"/>
+                <TableColumn fx:id="colDuracion" text="Duración" prefWidth="80"/>
+                <TableColumn fx:id="colClasificacion" text="Clasificación" prefWidth="105"/>
+                <TableColumn fx:id="colEnCartelera" text="En cartelera" prefWidth="100"/>
             </columns>
             <columnResizePolicy>
                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN"/>
@@ -52,10 +52,10 @@
         <TextArea fx:id="txtSinopsis" prefRowCount="3" wrapText="true"/>
         <CheckBox fx:id="chkEnCartelera" text="En cartelera" selected="true"/>
         <FlowPane hgap="8" vgap="8">
-            <Button text="Nueva" styleClass="boton-secundario" onAction="#nueva"/>
-            <Button text="Crear" onAction="#crear"/>
-            <Button text="Guardar cambios" onAction="#guardar"/>
-            <Button text="Eliminar" styleClass="boton-secundario" onAction="#eliminar"/>
+            <Button text="Nueva" styleClass="btn-secundario" minWidth="-Infinity" onAction="#nueva"/>
+            <Button styleClass="btn-primario" minWidth="-Infinity" text="Crear" onAction="#crear"/>
+            <Button styleClass="btn-primario" minWidth="-Infinity" text="Guardar cambios" onAction="#guardar"/>
+            <Button text="Eliminar" styleClass="btn-peligro" minWidth="-Infinity" onAction="#eliminar"/>
         </FlowPane>
         <Label fx:id="lblMensaje" styleClass="mensaje-exito" wrapText="true"/>
     </VBox>
