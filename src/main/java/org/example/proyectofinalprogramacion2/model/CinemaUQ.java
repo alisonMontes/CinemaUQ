@@ -37,6 +37,7 @@ public class CinemaUQ {
         this.compras = new ArrayList<>();
     }
 
+    /** Devuelve la instancia única, creándola la primera vez que se pide. */
     public static CinemaUQ getInstancia() {
         if (instancia == null) {
             instancia = new CinemaUQ();
@@ -82,6 +83,7 @@ public class CinemaUQ {
         usuarios.add(Validador.noNulo(usuario, "usuario"));
     }
 
+    /** Busca un usuario por correo sin distinguir mayúsculas; devuelve null si no existe. */
     public Usuario buscarUsuarioPorCorreo(String correo) {
         if (correo == null) {
             return null;

@@ -25,6 +25,8 @@ public class AutenticacionService {
 
     /**
      * Registra un cliente con una tarjeta virtual ACTIVA con saldo 0 y una cuenta de puntos vacía.
+     *
+     * @throws UsuarioYaRegistradoException si ya existe un usuario con ese correo
      */
     public Cliente registrarCliente(String nombre, String correo, String clave) throws UsuarioYaRegistradoException {
         if (cinema.buscarUsuarioPorCorreo(correo) != null) {
@@ -38,6 +40,8 @@ public class AutenticacionService {
 
     /**
      * Inicia sesión de un cliente o administrador. La vista se elige con getRol().
+     *
+     * @throws CredencialesInvalidasException si el correo no existe o la clave no coincide
      */
     public Usuario iniciarSesion(String correo, String clave) throws CredencialesInvalidasException {
         Usuario usuario = cinema.buscarUsuarioPorCorreo(correo);

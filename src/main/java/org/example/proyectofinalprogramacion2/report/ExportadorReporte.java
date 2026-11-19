@@ -29,6 +29,7 @@ public class ExportadorReporte {
      * Guarda el texto en la carpeta indicada con el nombre sugerido.
      *
      * @return ruta del archivo creado
+     * @throws ReporteException si no se puede escribir el archivo
      */
     public Path exportar(String texto, Path carpeta, TipoReporte tipo, LocalDateTime ahora) throws ReporteException {
         Objects.requireNonNull(carpeta, "La carpeta es obligatoria");
@@ -41,6 +42,7 @@ public class ExportadorReporte {
      * Guarda el texto en el archivo indicado (por ejemplo, el que el usuario eligió); lo reemplaza si existe.
      *
      * @return ruta del archivo creado
+     * @throws ReporteException si no se puede escribir el archivo
      */
     public Path guardar(String texto, Path archivo) throws ReporteException {
         Objects.requireNonNull(texto, "El texto del reporte es obligatorio");

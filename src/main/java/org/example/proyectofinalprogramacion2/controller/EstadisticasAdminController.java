@@ -136,6 +136,7 @@ public class EstadisticasAdminController implements PestanaAdmin {
         calcular();
     }
 
+    /** Botón para calcular las estadísticas del periodo elegido. */
     @FXML
     private void calcular() {
         LocalDate desde;

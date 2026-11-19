@@ -94,6 +94,7 @@ public class CarteleraController implements PestanaCliente {
         tablaFunciones.refresh();
     }
 
+    /** Botón para guardar la función elegida en el carrito y pasar a los asientos. */
     @FXML
     private void elegirFuncion() {
         Funcion funcion = tablaFunciones.getSelectionModel().getSelectedItem();

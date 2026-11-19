@@ -25,6 +25,7 @@ public final class ConfiguracionPuntos {
 
     /**
      * Calcula los puntos que genera un pago con tarjeta (se descartan las fracciones).
+     * Ejemplo: un pago de $25.050 genera 250 puntos.
      */
     public static int calcularPuntos(double montoPagado) {
         if (montoPagado <= 0) {

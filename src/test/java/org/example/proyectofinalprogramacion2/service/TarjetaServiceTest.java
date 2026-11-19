@@ -13,10 +13,14 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+/**
+ * Pruebas de la tarjeta virtual: recarga, activación y bloqueo solo por el administrador.
+ */
 class TarjetaServiceTest extends PruebaBase {
 
     private final TarjetaService tarjetaService = new TarjetaService();
 
+    // La recarga del administrador aumenta el saldo y registra el movimiento.
     @Test
     void testRecargaPorAdministradorAumentaSaldoYRegistraMovimiento() throws Exception {
         Cliente carlos = cliente(CARLOS);
@@ -32,6 +36,7 @@ class TarjetaServiceTest extends PruebaBase {
         assertEquals(AHORA, ultimo.getFecha());
     }
 
+    // Un cliente no puede recargar: se lanza AccesoDenegadoException.
     @Test
     void testRecargaPorClienteLanzaAccesoDenegado() {
         Cliente carlos = cliente(CARLOS);
@@ -47,6 +52,7 @@ class TarjetaServiceTest extends PruebaBase {
         assertEquals(movimientosIniciales, carlos.getTarjeta().getMovimientos().size());
     }
 
+    // Un cliente no puede bloquear una tarjeta.
     @Test
     void testBloqueoPorClienteLanzaAccesoDenegado() {
         Cliente carlos = cliente(CARLOS);
@@ -56,6 +62,7 @@ class TarjetaServiceTest extends PruebaBase {
         assertEquals(EstadoTarjeta.ACTIVA, carlos.getTarjeta().getEstado());
     }
 
+    // Un cliente no puede activar una tarjeta.
     @Test
     void testActivacionPorClienteLanzaAccesoDenegado() {
         Cliente laura = cliente(LAURA);
@@ -65,6 +72,7 @@ class TarjetaServiceTest extends PruebaBase {
         assertEquals(EstadoTarjeta.BLOQUEADA, laura.getTarjeta().getEstado());
     }
 
+    // El administrador puede bloquear y volver a activar una tarjeta.
     @Test
     void testBloqueoYActivacionPorAdministrador() throws Exception {
         Cliente carlos = cliente(CARLOS);

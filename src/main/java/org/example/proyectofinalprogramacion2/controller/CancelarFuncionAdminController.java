@@ -102,6 +102,7 @@ public class CancelarFuncionAdminController implements PestanaAdmin {
         }
     }
 
+    /** Botón para cancelar la función elegida (pide confirmación) y mostrar los reembolsos. */
     @FXML
     private void cancelarFuncion() {
         Funcion funcion = tablaFunciones.getSelectionModel().getSelectedItem();

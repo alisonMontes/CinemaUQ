@@ -8,6 +8,7 @@ import java.util.Map;
 
 /**
  * Ventas por periodo: ingresos netos de cada día.
+ * Patrón Template Method: subclase de ReporteTxt.
  */
 // SRP: solo presenta las ventas por día que calcula EstadisticaService.
 public class ReporteVentas extends ReporteTxt {

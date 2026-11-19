@@ -38,6 +38,7 @@ public final class DatosIniciales {
 
     /**
      * Reinicia CinemaUQ y carga los datos de demostración.
+     * Recibe la fecha y hora actual como parámetro para que las pruebas carguen siempre los mismos datos.
      */
     public static void cargar(LocalDateTime ahora) {
         try {

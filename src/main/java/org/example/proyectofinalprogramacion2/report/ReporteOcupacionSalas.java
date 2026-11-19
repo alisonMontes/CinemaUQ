@@ -10,6 +10,7 @@ import java.util.Map;
 
 /**
  * Ocupación de las funciones que se proyectan en el periodo y ocupación total de cada sala.
+ * Patrón Template Method: subclase de ReporteTxt.
  */
 // SRP: solo presenta la ocupación que calcula EstadisticaService.
 public class ReporteOcupacionSalas extends ReporteTxt {

@@ -105,6 +105,7 @@ public class SalasAdminController implements PestanaAdmin {
         tablaAsientos.refresh();
     }
 
+    /** Botón para crear la sala con los datos del formulario. */
     @FXML
     private void crearSala() {
         try {
@@ -120,6 +121,7 @@ public class SalasAdminController implements PestanaAdmin {
         }
     }
 
+    /** Botón para agregar un asiento normal o accesible a la sala. */
     @FXML
     private void agregarAsiento() {
         Sala sala = tablaSalas.getSelectionModel().getSelectedItem();
@@ -139,6 +141,7 @@ public class SalasAdminController implements PestanaAdmin {
         }
     }
 
+    /** Botón para eliminar el asiento seleccionado (pide confirmación). */
     @FXML
     private void eliminarAsiento() {
         Sala sala = tablaSalas.getSelectionModel().getSelectedItem();

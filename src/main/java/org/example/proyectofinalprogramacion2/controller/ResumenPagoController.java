@@ -148,11 +148,13 @@ public class ResumenPagoController implements PestanaCliente {
                 + " (" + cliente.getTarjeta().getEstado() + ")");
     }
 
+    /** Botón para quitar la promoción elegida. */
     @FXML
     private void quitarPromocion() {
         cmbPromocion.setValue(null);
     }
 
+    /** Botón para pagar el carrito con la tarjeta del cliente. */
     @FXML
     private void pagar() {
         CarritoCompra carrito = principal.getCarrito();

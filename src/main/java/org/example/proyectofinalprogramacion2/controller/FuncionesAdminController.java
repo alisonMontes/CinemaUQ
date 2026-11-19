@@ -96,6 +96,7 @@ public class FuncionesAdminController implements PestanaAdmin {
         }
     }
 
+    /** Botón para crear la función con los datos del formulario. */
     @FXML
     private void crear() {
         try {
@@ -112,6 +113,7 @@ public class FuncionesAdminController implements PestanaAdmin {
         }
     }
 
+    /** Botón para eliminar la función seleccionada (pide confirmación). */
     @FXML
     private void eliminar() {
         Funcion funcion = tablaFunciones.getSelectionModel().getSelectedItem();

@@ -14,10 +14,12 @@ import java.util.List;
 // SRP: solo consulta y descuenta puntos; qué beneficio se entrega lo decide CompraService.
 public class PuntosService {
 
+    /** Puntos que se pueden usar en la fecha indicada (no vencidos ni anulados). */
     public int getPuntosVigentes(Cliente cliente, LocalDate hoy) {
         return cliente.getCuentaPuntos().getPuntosDisponibles(hoy);
     }
 
+    /** Acumulaciones vigentes, de la más próxima a vencer a la más lejana. */
     public List<AcumulacionPuntos> getAcumulacionesVigentes(Cliente cliente, LocalDate hoy) {
         return cliente.getCuentaPuntos().getAcumulacionesVigentes(hoy);
     }
@@ -35,6 +37,7 @@ public class PuntosService {
         return vencidas;
     }
 
+    /** Total de puntos que se perdieron por vencimiento (vencen al año de obtenerse). */
     public int getPuntosVencidos(Cliente cliente, LocalDate hoy) {
         int total = 0;
         for (AcumulacionPuntos acumulacion : getAcumulacionesVencidas(cliente, hoy)) {
@@ -46,16 +49,21 @@ public class PuntosService {
     /**
      * Descuenta puntos usando primero las acumulaciones más próximas a vencer.
      * Los vencidos y anulados nunca se usan. Si no alcanzan, no se descuenta nada.
+     * Recibe la fecha como parámetro para poder probar el vencimiento.
+     *
+     * @throws PuntosInsuficientesException si los puntos vigentes no alcanzan
      */
     public void redimir(Cliente cliente, int puntos, LocalDate hoy) throws PuntosInsuficientesException {
         if (puntos <= 0) {
             throw new IllegalArgumentException("Los puntos a redimir deben ser mayores que cero");
         }
         int disponibles = getPuntosVigentes(cliente, hoy);
+        // Se valida antes de tocar las acumulaciones para no descontar a medias.
         if (disponibles < puntos) {
             throw new PuntosInsuficientesException("Puntos insuficientes: tienes " + disponibles
                     + " vigentes y se requieren " + puntos);
         }
+        // Se gasta de cada acumulación lo necesario, empezando por la más próxima a vencer.
         int pendientes = puntos;
         for (AcumulacionPuntos acumulacion : getAcumulacionesVigentes(cliente, hoy)) {
             int usados = Math.min(pendientes, acumulacion.getPuntosDisponibles());

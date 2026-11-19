@@ -109,6 +109,7 @@ public class AdminController {
         return administrador;
     }
 
+    /** Botón para cerrar sesión y volver al inicio de sesión. */
     @FXML
     private void cerrarSesion() {
         NavegadorVistas.cambiarVista(NavegadorVistas.ventanaDe(tabPane), NavegadorVistas.LOGIN, "Iniciar sesión");

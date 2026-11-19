@@ -28,6 +28,8 @@ public class TarjetaService {
 
     /**
      * Recarga la tarjeta del cliente. Se permite aunque esté bloqueada.
+     *
+     * @throws AccesoDenegadoException si quien recarga no es administrador
      */
     public void recargar(Usuario actor, Cliente cliente, double monto, LocalDateTime ahora)
             throws AccesoDenegadoException {
@@ -41,10 +43,12 @@ public class TarjetaService {
                 "Recarga realizada por " + actor.getNombre()));
     }
 
+    /** Activa la tarjeta del cliente (solo administrador). */
     public void activar(Usuario actor, Cliente cliente) throws AccesoDenegadoException {
         cambiarEstado(actor, cliente, EstadoTarjeta.ACTIVA);
     }
 
+    /** Bloquea la tarjeta: el cliente no podrá pagar con ella (solo administrador). */
     public void bloquear(Usuario actor, Cliente cliente) throws AccesoDenegadoException {
         cambiarEstado(actor, cliente, EstadoTarjeta.BLOQUEADA);
     }

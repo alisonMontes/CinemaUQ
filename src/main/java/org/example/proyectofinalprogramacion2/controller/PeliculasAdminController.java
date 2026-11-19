@@ -96,6 +96,7 @@ public class PeliculasAdminController implements PestanaAdmin {
         lblMensaje.setText("");
     }
 
+    /** Botón para limpiar el formulario y escribir una película nueva. */
     @FXML
     private void nueva() {
         tablaPeliculas.getSelectionModel().clearSelection();
@@ -108,6 +109,7 @@ public class PeliculasAdminController implements PestanaAdmin {
         lblMensaje.setText("");
     }
 
+    /** Botón para crear la película con los datos del formulario. */
     @FXML
     private void crear() {
         try {
@@ -124,6 +126,7 @@ public class PeliculasAdminController implements PestanaAdmin {
         }
     }
 
+    /** Botón para guardar los cambios de la película seleccionada. */
     @FXML
     private void guardar() {
         Pelicula pelicula = tablaPeliculas.getSelectionModel().getSelectedItem();
@@ -142,6 +145,7 @@ public class PeliculasAdminController implements PestanaAdmin {
         }
     }
 
+    /** Botón para eliminar la película seleccionada (pide confirmación). */
     @FXML
     private void eliminar() {
         Pelicula pelicula = tablaPeliculas.getSelectionModel().getSelectedItem();

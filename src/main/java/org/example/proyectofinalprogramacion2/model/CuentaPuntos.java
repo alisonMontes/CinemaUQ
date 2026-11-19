@@ -23,6 +23,7 @@ public class CuentaPuntos {
 
     /**
      * Acumulaciones que se pueden usar hoy, ordenadas de la más próxima a vencer a la más lejana.
+     * Este orden es el que se usa al redimir.
      */
     public List<AcumulacionPuntos> getAcumulacionesVigentes(LocalDate hoy) {
         List<AcumulacionPuntos> vigentes = new ArrayList<>();
@@ -51,6 +52,7 @@ public class CuentaPuntos {
         return false;
     }
 
+    /** Total de puntos vigentes en la fecha indicada. */
     public int getPuntosDisponibles(LocalDate hoy) {
         int total = 0;
         for (AcumulacionPuntos acumulacion : getAcumulacionesVigentes(hoy)) {

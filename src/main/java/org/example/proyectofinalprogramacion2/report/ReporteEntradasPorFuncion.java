@@ -9,6 +9,7 @@ import java.util.Map;
 
 /**
  * Entradas vendidas por función en el periodo. Los canjes de producto o combo no tienen función y no aparecen.
+ * Patrón Template Method: subclase de ReporteTxt.
  */
 // SRP: solo presenta el conteo de entradas por función.
 public class ReporteEntradasPorFuncion extends ReporteTxt {

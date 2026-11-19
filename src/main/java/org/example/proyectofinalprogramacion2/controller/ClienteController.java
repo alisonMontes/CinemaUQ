@@ -113,6 +113,7 @@ public class ClienteController {
         tabPane.getSelectionModel().select(tabCartelera);
     }
 
+    /** Botón para cerrar sesión y volver al inicio de sesión. */
     @FXML
     private void cerrarSesion() {
         NavegadorVistas.cambiarVista(NavegadorVistas.ventanaDe(tabPane), NavegadorVistas.LOGIN, "Iniciar sesión");

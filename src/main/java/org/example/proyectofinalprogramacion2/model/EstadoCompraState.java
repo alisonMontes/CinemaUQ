@@ -10,8 +10,14 @@ import org.example.proyectofinalprogramacion2.strategy.ReembolsoStrategy;
 // LSP: Compra trabaja con cualquier estado a través de esta interfaz sin saber cuál es.
 public interface EstadoCompraState {
 
+    /** Valor del enum que corresponde a este estado. */
     EstadoCompra getValor();
 
+    /**
+     * Pasa la compra a PAGADA si el estado actual lo permite.
+     *
+     * @throws CinemaUQException si en este estado no se puede pagar
+     */
     void pagar(Compra compra) throws CinemaUQException;
 
     /**

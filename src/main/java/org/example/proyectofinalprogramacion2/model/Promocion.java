@@ -23,10 +23,12 @@ public class Promocion {
         setFechaFin(fechaFin);
     }
 
+    /** Indica si la fecha está entre el inicio y el fin de la promoción (ambos inclusive). */
     public boolean estaVigente(LocalDate hoy) {
         return !hoy.isBefore(fechaInicio) && !hoy.isAfter(fechaFin);
     }
 
+    /** Valor a descontar del monto según el porcentaje de la promoción. */
     public double calcularDescuento(double monto) {
         return monto * porcentajeDescuento / 100;
     }

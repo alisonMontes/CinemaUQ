@@ -8,6 +8,7 @@ import org.example.proyectofinalprogramacion2.model.Funcion;
 
 /**
  * Crea entradas accesibles (exige asiento ACCESIBLE).
+ * Patrón Factory Method: fábrica concreta de EntradaAccesible.
  */
 // SRP: solo crea entradas accesibles.
 public class EntradaAccesibleFactory extends EntradaFactory {

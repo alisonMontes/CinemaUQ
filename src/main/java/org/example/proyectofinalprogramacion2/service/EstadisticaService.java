@@ -203,6 +203,7 @@ public class EstadisticaService {
         return contarProductos(getComprasPagadas(getComprasEnPeriodo(desde, hasta)));
     }
 
+    /** Combos entregados en todas las compras PAGADAS, de mayor a menor. */
     public Map<Combo, Integer> getCombosMasVendidos() {
         return contarCombos(getComprasPagadas(cinema.getCompras()));
     }
@@ -246,6 +247,7 @@ public class EstadisticaService {
 
     // ---------- Reembolsos ----------
 
+    /** Compras del periodo que terminaron REEMBOLSADAS. */
     public List<Compra> getComprasReembolsadas(LocalDate desde, LocalDate hasta) {
         List<Compra> reembolsadas = new ArrayList<>();
         for (Compra compra : getComprasEnPeriodo(desde, hasta)) {
@@ -256,6 +258,7 @@ public class EstadisticaService {
         return reembolsadas;
     }
 
+    /** Suma de lo devuelto a las tarjetas por las compras reembolsadas del periodo. */
     public double getTotalReembolsado(LocalDate desde, LocalDate hasta) {
         double total = 0;
         for (Compra compra : getComprasReembolsadas(desde, hasta)) {
@@ -282,6 +285,7 @@ public class EstadisticaService {
         return recargas;
     }
 
+    /** Suma de las recargas hechas en el periodo. */
     public double getTotalRecargado(LocalDate desde, LocalDate hasta) {
         double total = 0;
         for (List<MovimientoTarjeta> movimientos : getRecargas(desde, hasta).values()) {
@@ -337,6 +341,7 @@ public class EstadisticaService {
         return redenciones;
     }
 
+    /** Puntos usados en los canjes del periodo. */
     public int getPuntosRedimidos(LocalDate desde, LocalDate hasta) {
         int total = 0;
         for (Compra compra : getRedenciones(desde, hasta)) {

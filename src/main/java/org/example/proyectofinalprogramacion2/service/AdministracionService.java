@@ -47,6 +47,7 @@ public class AdministracionService {
         return cinema.getPeliculas();
     }
 
+    /** Registra una película; el código no puede repetirse. */
     public void crearPelicula(Usuario actor, Pelicula pelicula) throws CinemaUQException {
         ValidadorAcceso.exigirAdministrador(actor);
         if (cinema.buscarPelicula(pelicula.getCodigo()) != null) {
@@ -55,6 +56,7 @@ public class AdministracionService {
         cinema.agregarPelicula(pelicula);
     }
 
+    /** Actualiza los datos de una película existente. */
     public void actualizarPelicula(Usuario actor, String codigo, String titulo, String genero, int duracionMinutos,
                                    String clasificacion, String sinopsis, boolean enCartelera)
             throws CinemaUQException {
@@ -89,6 +91,7 @@ public class AdministracionService {
         return cinema.getSalas();
     }
 
+    /** Registra una sala; el código no puede repetirse. */
     public void crearSala(Usuario actor, Sala sala) throws CinemaUQException {
         ValidadorAcceso.exigirAdministrador(actor);
         if (cinema.buscarSala(sala.getCodigo()) != null) {
@@ -102,6 +105,7 @@ public class AdministracionService {
         obtenerSala(codigo).setNombre(nombre);
     }
 
+    /** Elimina una sala solo si no tiene funciones registradas. */
     public void eliminarSala(Usuario actor, String codigo) throws CinemaUQException {
         ValidadorAcceso.exigirAdministrador(actor);
         Sala sala = obtenerSala(codigo);
@@ -113,6 +117,7 @@ public class AdministracionService {
         cinema.eliminarSala(sala);
     }
 
+    /** Agrega un asiento a la sala si no existe otro con la misma fila y número. */
     public void agregarAsiento(Usuario actor, String codigoSala, Asiento asiento) throws CinemaUQException {
         ValidadorAcceso.exigirAdministrador(actor);
         Sala sala = obtenerSala(codigoSala);
@@ -199,11 +204,13 @@ public class AdministracionService {
             throws CinemaUQException {
         LocalDateTime fin = inicio.plusMinutes(pelicula.getDuracionMinutos());
         for (Funcion otra : cinema.getFunciones()) {
+            // Se ignoran la misma función, las de otras salas y las canceladas.
             if (otra == actual || !otra.getSala().equals(sala) || otra.getEstado() == EstadoFuncion.CANCELADA) {
                 continue;
             }
             LocalDateTime otraInicio = otra.getFechaHora();
             LocalDateTime otraFin = otraInicio.plusMinutes(otra.getPelicula().getDuracionMinutos());
+            // Dos horarios se cruzan si cada uno empieza antes de que termine el otro.
             if (inicio.isBefore(otraFin) && otraInicio.isBefore(fin)) {
                 throw new CinemaUQException("El horario se cruza con la función " + otra.getCodigo()
                         + " en " + sala.getNombre());
@@ -218,6 +225,7 @@ public class AdministracionService {
         return cinema.getProductos();
     }
 
+    /** Registra un producto; el código no puede repetirse. */
     public void crearProducto(Usuario actor, Producto producto) throws CinemaUQException {
         ValidadorAcceso.exigirAdministrador(actor);
         if (cinema.buscarProducto(producto.getCodigo()) != null) {
@@ -256,6 +264,7 @@ public class AdministracionService {
         return cinema.getCombos();
     }
 
+    /** Registra un combo con código único y al menos un componente. */
     public void crearCombo(Usuario actor, Combo combo) throws CinemaUQException {
         ValidadorAcceso.exigirAdministrador(actor);
         if (cinema.buscarCombo(combo.getCodigo()) != null) {
@@ -267,6 +276,7 @@ public class AdministracionService {
         cinema.agregarCombo(combo);
     }
 
+    /** Cambia nombre y descuento del combo y reemplaza todos sus componentes. */
     public void actualizarCombo(Usuario actor, String codigo, String nombre, double porcentajeDescuento,
                                 List<ItemVendible> componentes) throws CinemaUQException {
         ValidadorAcceso.exigirAdministrador(actor);
@@ -305,6 +315,7 @@ public class AdministracionService {
         return cinema.getPromociones();
     }
 
+    /** Registra una promoción; el código no puede repetirse. */
     public void crearPromocion(Usuario actor, Promocion promocion) throws CinemaUQException {
         ValidadorAcceso.exigirAdministrador(actor);
         if (cinema.buscarPromocion(promocion.getCodigo()) != null) {
@@ -313,6 +324,7 @@ public class AdministracionService {
         cinema.agregarPromocion(promocion);
     }
 
+    /** Actualiza la promoción validando que la fecha de fin no sea anterior a la de inicio. */
     public void actualizarPromocion(Usuario actor, String codigo, String nombre, double porcentajeDescuento,
                                     LocalDate fechaInicio, LocalDate fechaFin) throws CinemaUQException {
         ValidadorAcceso.exigirAdministrador(actor);

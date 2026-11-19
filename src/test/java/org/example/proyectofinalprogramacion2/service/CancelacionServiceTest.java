@@ -24,6 +24,9 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Pruebas de cancelación: porcentaje de reembolso según la anticipación, permisos y cancelación de funciones.
+ */
 class CancelacionServiceTest extends PruebaBase {
 
     private final CompraService compraService = new CompraService();
@@ -40,6 +43,7 @@ class CancelacionServiceTest extends PruebaBase {
         return funcion("F004").getFechaHora();
     }
 
+    // Con más de 24 h de anticipación se devuelve el 100 %.
     @Test
     void testReembolsoCompletoConMasDe24Horas() throws Exception {
         Compra compra = comprarEnF004();
@@ -55,6 +59,7 @@ class CancelacionServiceTest extends PruebaBase {
         assertTrue(funcion("F004").estaDisponible(compra.getEntradas().get(0).getAsiento()));
     }
 
+    // Con exactamente 24 h de anticipación se devuelve el 80 %.
     @Test
     void testReembolsoParcialExactamente24Horas() throws Exception {
         Compra compra = comprarEnF004();
@@ -65,6 +70,7 @@ class CancelacionServiceTest extends PruebaBase {
         assertEquals(EstadoCompra.REEMBOLSADA, compra.getEstado());
     }
 
+    // Con exactamente 2 h de anticipación todavía se devuelve el 80 %.
     @Test
     void testReembolsoParcialExactamente2Horas() throws Exception {
         Compra compra = comprarEnF004();
@@ -74,6 +80,7 @@ class CancelacionServiceTest extends PruebaBase {
         assertEquals(18_000 * 0.8, devuelto, 0.001);
     }
 
+    // Con menos de 2 h no se permite cancelar.
     @Test
     void testCancelacionNoPermitidaConMenosDe2Horas() throws Exception {
         Compra compra = comprarEnF004();
@@ -89,6 +96,7 @@ class CancelacionServiceTest extends PruebaBase {
         assertFalse(funcion("F004").estaDisponible(compra.getEntradas().get(0).getAsiento()));
     }
 
+    // consultarPolitica devuelve la política correcta justo en los límites de 24 h y 2 h.
     @Test
     void testConsultarPoliticaRespetaLosLimitesDe24Y2Horas() throws Exception {
         Compra compra = comprarEnF004();
@@ -102,6 +110,7 @@ class CancelacionServiceTest extends PruebaBase {
                 cancelacionService.consultarPolitica(compra, inicio.minusHours(2).plusMinutes(1)));
     }
 
+    // Una compra ya reembolsada no se puede reembolsar otra vez.
     @Test
     void testNoSeReembolsaDosVecesLaMismaCompra() throws Exception {
         Compra compra = comprarEnF004();
@@ -116,6 +125,7 @@ class CancelacionServiceTest extends PruebaBase {
         assertEquals(18_000, compra.getMontoReembolsado(), 0.001);
     }
 
+    // Al cancelar una función se reembolsa el 100 % y se notifica a los clientes.
     @Test
     void testCancelarFuncionReembolsaCienPorCientoYNotifica() throws Exception {
         Funcion f002 = funcion("F002");                          // hoy 20:00: un cliente solo recibiría el 80 %
@@ -134,6 +144,7 @@ class CancelacionServiceTest extends PruebaBase {
         assertTrue(carlos.getNotificaciones().get(carlos.getNotificaciones().size() - 1).contains("cancelada"));
     }
 
+    // Un cliente no puede cancelar una función: solo el administrador.
     @Test
     void testClienteNoPuedeCancelarFuncion() {
         assertThrows(AccesoDenegadoException.class,
@@ -141,6 +152,7 @@ class CancelacionServiceTest extends PruebaBase {
         assertEquals(EstadoFuncion.PROGRAMADA, funcion("F002").getEstado());
     }
 
+    // Un cliente no puede cancelar la compra de otro cliente.
     @Test
     void testClienteNoPuedeCancelarCompraAjena() throws Exception {
         Compra compraDeAna = comprarEnF004();
@@ -150,6 +162,7 @@ class CancelacionServiceTest extends PruebaBase {
         assertEquals(EstadoCompra.PAGADA, compraDeAna.getEstado());
     }
 
+    // Una compra pagada con puntos no se puede cancelar.
     @Test
     void testCompraPagadaConPuntosNoSeCancela() {
         Cliente ana = cliente(ANA);

@@ -9,6 +9,7 @@ import java.util.Map;
 
 /**
  * Entradas vendidas por película en el periodo.
+ * Patrón Template Method: subclase de ReporteTxt.
  */
 // SRP: solo presenta el conteo de entradas por película.
 public class ReporteEntradasPorPelicula extends ReporteTxt {

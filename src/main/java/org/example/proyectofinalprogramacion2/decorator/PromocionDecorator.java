@@ -24,6 +24,7 @@ public class PromocionDecorator implements ItemVendible {
         this.fecha = Objects.requireNonNull(fecha, "La fecha es obligatoria");
     }
 
+    /** Indica si la promoción está vigente en la fecha de la compra. */
     public boolean aplicaDescuento() {
         return promocion.estaVigente(fecha);
     }
@@ -33,6 +34,7 @@ public class PromocionDecorator implements ItemVendible {
         return aplicaDescuento() ? item.getNombre() + " [" + promocion.getNombre() + "]" : item.getNombre();
     }
 
+    /** Precio del ítem menos el descuento de la promoción, solo si está vigente. */
     @Override
     public double getPrecio() {
         double precio = item.getPrecio();

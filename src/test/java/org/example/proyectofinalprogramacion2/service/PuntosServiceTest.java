@@ -18,6 +18,9 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Pruebas de puntos: 1 punto por cada $100, vencimiento al año, orden de consumo y anulación por reembolso.
+ */
 class PuntosServiceTest extends PruebaBase {
 
     private final PuntosService puntosService = new PuntosService();
@@ -40,6 +43,7 @@ class PuntosServiceTest extends PruebaBase {
         return acumulaciones.get(acumulaciones.size() - 1);
     }
 
+    // Una compra con tarjeta acumula 1 punto por cada $100 pagados.
     @Test
     void testCompraConTarjetaAcumulaUnPuntoPorCada100() throws Exception {
         Cliente ana = cliente(ANA);
@@ -57,6 +61,7 @@ class PuntosServiceTest extends PruebaBase {
         assertEquals(vigentesAntes + 180, puntosService.getPuntosVigentes(ana, HOY));
     }
 
+    // Al redimir se usan primero los puntos más próximos a vencer.
     @Test
     void testRedimirUsaPrimeroLosPuntosProximosAVencer() throws Exception {
         Cliente cliente = clienteNuevo();
@@ -70,6 +75,7 @@ class PuntosServiceTest extends PruebaBase {
         assertEquals(400, puntosService.getPuntosVigentes(cliente, HOY));
     }
 
+    // Si una acumulación se agota, el resto se toma de la siguiente.
     @Test
     void testRedimirPasaALaSiguienteAcumulacionCuandoUnaSeAgota() throws Exception {
         Cliente cliente = clienteNuevo();
@@ -82,6 +88,7 @@ class PuntosServiceTest extends PruebaBase {
         assertEquals(100, recientes.getPuntosDisponibles());
     }
 
+    // Los puntos vencidos no se usan al redimir.
     @Test
     void testPuntosVencidosNoSeUsan() throws Exception {
         Cliente cliente = clienteNuevo();
@@ -94,6 +101,7 @@ class PuntosServiceTest extends PruebaBase {
         assertEquals(1_000, vencidos.getPuntosDisponibles());
     }
 
+    // Los puntos vencen al cumplir un año de obtenidos.
     @Test
     void testPuntosVencenAlCumplirUnAnio() throws Exception {
         Cliente cliente = clienteNuevo();
@@ -105,6 +113,7 @@ class PuntosServiceTest extends PruebaBase {
         assertEquals(300, puntosService.getPuntosVigentes(cliente, HOY));
     }
 
+    // Si los puntos no alcanzan, no se descuenta nada.
     @Test
     void testPuntosInsuficientesNoDescuentaNada() throws Exception {
         Cliente cliente = clienteNuevo();
@@ -117,6 +126,7 @@ class PuntosServiceTest extends PruebaBase {
         assertEquals(200, segunda.getPuntosDisponibles());
     }
 
+    // Un canje de producto sin puntos suficientes no registra ninguna compra.
     @Test
     void testRedimirProductoConPuntosInsuficientesNoRegistraCompra() throws Exception {
         Cliente cliente = clienteNuevo();
@@ -127,6 +137,7 @@ class PuntosServiceTest extends PruebaBase {
         assertTrue(cliente.getCompras().isEmpty());
     }
 
+    // Al reembolsar una compra se anulan sus puntos si siguen sin usar.
     @Test
     void testReembolsoAnulaPuntosSinUsar() throws Exception {
         Cliente ana = cliente(ANA);
@@ -142,6 +153,7 @@ class PuntosServiceTest extends PruebaBase {
         assertEquals(vigentesAntes, puntosService.getPuntosVigentes(ana, HOY));
     }
 
+    // El reembolso se hace aunque los puntos de esa compra ya se hayan usado.
     @Test
     void testReembolsoProcedeAunqueLosPuntosYaSeUsaron() throws Exception {
         Cliente cliente = clienteNuevo();

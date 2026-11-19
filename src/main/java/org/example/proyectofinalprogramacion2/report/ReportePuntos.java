@@ -16,6 +16,7 @@ import java.util.StringJoiner;
 /**
  * Puntos acumulados y redimidos en el periodo. Los canjes de producto o combo no tienen función
  * y sí se cuentan como puntos redimidos.
+ * Patrón Template Method: subclase de ReporteTxt.
  */
 // SRP: solo presenta los movimientos de puntos que consulta EstadisticaService.
 public class ReportePuntos extends ReporteTxt {

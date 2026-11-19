@@ -11,6 +11,7 @@ import java.util.Map;
 
 /**
  * Cancelaciones y reembolsos de las compras hechas en el periodo.
+ * Patrón Template Method: subclase de ReporteTxt.
  */
 // SRP: solo presenta las compras reembolsadas que consulta EstadisticaService.
 public class ReporteReembolsos extends ReporteTxt {

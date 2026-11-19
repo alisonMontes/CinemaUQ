@@ -18,6 +18,7 @@ import java.util.Objects;
  * los estados (CompraPendiente, CompraPagada, CompraReembolsada).
  * Si se paga con tarjeta incluye al menos una entrada de una función.
  * Si es una redención de puntos (pagadaConPuntos), la función solo existe cuando se canjea una entrada.
+ * Patrones: Builder (Compra.Builder) para crearla y State (EstadoCompraState) para su ciclo de vida.
  */
 public class Compra {
 
@@ -54,6 +55,8 @@ public class Compra {
 
     /**
      * Marca la compra como pagada con el medio de pago indicado (al que irá un eventual reembolso).
+     *
+     * @throws CinemaUQException si la compra no está PENDIENTE
      */
     public void confirmarPago(MedioPago medioPago) throws CinemaUQException {
         if (pagadaConPuntos) {
@@ -66,6 +69,8 @@ public class Compra {
 
     /**
      * Marca como pagada una redención, registrando los puntos usados.
+     *
+     * @throws CinemaUQException si la compra no está PENDIENTE
      */
     public void confirmarCanje(int puntosUsados) throws CinemaUQException {
         if (!pagadaConPuntos) {
@@ -78,6 +83,9 @@ public class Compra {
 
     /**
      * Reembolsa la compra según la estrategia y devuelve el valor a devolver.
+     * El estado actual decide si se puede: solo una compra PAGADA con tarjeta se reembolsa.
+     *
+     * @throws CinemaUQException si el estado o la estrategia no permiten el reembolso
      */
     public double reembolsar(ReembolsoStrategy estrategia) throws CinemaUQException {
         Objects.requireNonNull(estrategia, "La estrategia de reembolso es obligatoria");
@@ -115,6 +123,7 @@ public class Compra {
         return subtotal;
     }
 
+    /** Valor descontado por la promoción (0 en los canjes con puntos). */
     public double getDescuento() {
         return pagadaConPuntos ? 0 : calcularSubtotal() - total;
     }
@@ -248,7 +257,14 @@ public class Compra {
             return this;
         }
 
+        /**
+         * Valida la compra y la crea en estado PENDIENTE con su total calculado.
+         *
+         * @throws CompraInvalidaException si no tiene entradas, mezcla funciones o el canje no tiene un solo beneficio
+         * @throws PromocionNoVigenteException si la promoción no está vigente en la fecha de la compra
+         */
         public Compra build() throws CompraInvalidaException, PromocionNoVigenteException {
+            // Todas las entradas deben ser de la función de la compra.
             for (Entrada entrada : entradas) {
                 if (!entrada.getFuncion().equals(funcion)) {
                     throw new CompraInvalidaException("La entrada " + entrada.getAsiento().getCodigo()
@@ -290,6 +306,7 @@ public class Compra {
             items.addAll(combos);
             double total = 0;
             for (ItemVendible item : items) {
+                // Decorator: si hay promoción, cada ítem se envuelve para aplicarle el descuento.
                 ItemVendible conPromocion = promocion == null
                         ? item
                         : new PromocionDecorator(item, promocion, fecha.toLocalDate());

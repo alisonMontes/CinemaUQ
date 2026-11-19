@@ -22,6 +22,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Pruebas de los reportes TXT: totales y filtro por periodo, fechas inválidas, tipos de reporte y exportación.
+ */
 class ReportesTest extends PruebaBase {
 
     private final GeneradorReportes generador = new GeneradorReportes();
@@ -43,6 +46,7 @@ class ReportesTest extends PruebaBase {
         return total;
     }
 
+    // El reporte de ventas muestra el ingreso neto correcto del periodo.
     @Test
     void testReporteVentasSumaLoCorrectoEnElPeriodo() throws Exception {
         // Compras del día: 56.400 + 26.100 + 35.200 + 30.500 (reembolsada al 100 %) + 23.000.
@@ -57,6 +61,7 @@ class ReportesTest extends PruebaBase {
         assertTrue(texto.contains("Fecha de generación: 10/03/2026 10:00"), texto);
     }
 
+    // Las compras fuera del periodo no entran en el reporte de ventas.
     @Test
     void testReporteVentasSoloCuentaLasComprasDelPeriodo() throws Exception {
         Funcion funcion = funcion("F004");
@@ -72,6 +77,7 @@ class ReportesTest extends PruebaBase {
         assertTrue(dosDias.contains("Registros encontrados: 2"), dosDias);
     }
 
+    // Un periodo sin ventas muestra el mensaje de sin registros.
     @Test
     void testReporteVentasSinRegistrosLoIndica() throws Exception {
         LocalDate desde = LocalDate.of(2025, 1, 1);
@@ -84,6 +90,7 @@ class ReportesTest extends PruebaBase {
         assertFalse(texto.contains("Total ingresos netos"), texto);
     }
 
+    // Si la fecha inicial es posterior a la final se lanza ReporteException.
     @Test
     void testReporteConPeriodoInvertidoLanzaReporteException() {
         ReporteExportable ventas = generador.obtenerReporte(TipoReporte.VENTAS);
@@ -91,6 +98,7 @@ class ReportesTest extends PruebaBase {
         assertThrows(ReporteException.class, () -> ventas.generarTexto(HOY, HOY.minusDays(1), AHORA));
     }
 
+    // GeneradorReportes entrega un reporte para cada TipoReporte.
     @Test
     void testGeneradorEntregaUnReporteParaCadaTipo() throws Exception {
         for (TipoReporte tipo : TipoReporte.values()) {
@@ -102,6 +110,7 @@ class ReportesTest extends PruebaBase {
         }
     }
 
+    // El reporte de productos incluye los canjes con puntos (sin función).
     @Test
     void testReporteProductosIncluyeCanjesSinFuncion() throws Exception {
         // PAGADAS: C2 crispetas medianas, C3 dos gaseosas, C5 chocolatina y el canje de crispetas medianas
@@ -112,6 +121,7 @@ class ReportesTest extends PruebaBase {
         assertTrue(texto.contains("Total combos: 1"), texto);
     }
 
+    // El reporte de puntos cuenta los canjes con función y sin función.
     @Test
     void testReportePuntosCuentaRedencionesConYSinFuncion() throws Exception {
         // Canje de producto de Carlos (400) y canje de entrada de Ana (1.000).
@@ -121,6 +131,7 @@ class ReportesTest extends PruebaBase {
         assertTrue(texto.contains("ANULADA por reembolso"), texto);
     }
 
+    // El reporte de entradas por función omite los canjes sin función.
     @Test
     void testReporteEntradasPorFuncionOmiteCanjesSinFuncion() throws Exception {
         // Entradas PAGADAS: C1 (2), C2 (1), C3 (2), C5 (1) y el canje de entrada de Ana (1).
@@ -130,6 +141,7 @@ class ReportesTest extends PruebaBase {
         assertTrue(texto.contains("Registros encontrados: 5"), texto);
     }
 
+    // El exportador guarda el archivo .txt con el nombre sugerido.
     @Test
     void testExportadorGuardaArchivoConNombreSugerido(@TempDir Path carpeta) throws Exception {
         String texto = generador.obtenerReporte(TipoReporte.VENTAS).generarTexto(HOY, HOY, AHORA);
@@ -140,6 +152,7 @@ class ReportesTest extends PruebaBase {
         assertEquals(texto, Files.readString(archivo, StandardCharsets.UTF_8));
     }
 
+    // Si no se puede escribir el archivo, el exportador lanza ReporteException.
     @Test
     void testExportadorLanzaReporteExceptionSiNoPuedeEscribir(@TempDir Path carpeta) throws Exception {
         Path noEsCarpeta = Files.writeString(carpeta.resolve("archivo.txt"), "ocupado");

@@ -30,6 +30,7 @@ public class CarteleraService {
         this.cinema = cinema;
     }
 
+    /** Películas marcadas como en cartelera. */
     public List<Pelicula> getPeliculasEnCartelera() {
         List<Pelicula> enCartelera = new ArrayList<>();
         for (Pelicula pelicula : cinema.getPeliculas()) {
@@ -42,6 +43,7 @@ public class CarteleraService {
 
     /**
      * Funciones PROGRAMADAS de la película que aún no han empezado, ordenadas por fecha y hora.
+     * Recibe la hora actual como parámetro para poder probarlo.
      */
     public List<Funcion> getFuncionesDisponibles(Pelicula pelicula, LocalDateTime ahora) {
         List<Funcion> disponibles = new ArrayList<>();

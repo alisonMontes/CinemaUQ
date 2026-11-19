@@ -23,6 +23,7 @@ public class LoginController {
 
     private final AutenticacionService autenticacionService = new AutenticacionService();
 
+    /** Botón para iniciar sesión y abrir la ventana según el rol del usuario. */
     @FXML
     private void iniciarSesion() {
         String correo = txtCorreo.getText().trim();
@@ -48,6 +49,7 @@ public class LoginController {
         }
     }
 
+    /** Botón para ir a la pantalla de registro. */
     @FXML
     private void irARegistro() {
         NavegadorVistas.cambiarVista(NavegadorVistas.ventanaDe(txtCorreo), NavegadorVistas.REGISTRO, "Registro");

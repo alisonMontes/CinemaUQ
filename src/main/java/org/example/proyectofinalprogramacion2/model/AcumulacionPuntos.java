@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 /**
  * Puntos obtenidos en una compra pagada con tarjeta. Vencen un año después de obtenerse.
+ * Regla: 1 punto por cada $100 pagados; si la compra se reembolsa y siguen sin usar, se anulan.
  */
 public class AcumulacionPuntos {
 
@@ -24,11 +25,13 @@ public class AcumulacionPuntos {
 
     /**
      * Los puntos se pueden usar hasta el día anterior a la fecha de vencimiento.
+     * Recibe la fecha como parámetro para poder probar el vencimiento.
      */
     public boolean estaVencida(LocalDate hoy) {
         return !hoy.isBefore(fechaVencimiento);
     }
 
+    /** Indica si todavía no se ha gastado ningún punto de esta acumulación. */
     public boolean estaSinUsar() {
         return puntosDisponibles == puntosIniciales;
     }

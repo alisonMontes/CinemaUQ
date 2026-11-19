@@ -91,6 +91,7 @@ public class ConfiteriaController implements PestanaCliente {
         tablaCarrito.refresh();
     }
 
+    /** Botón para agregar el producto elegido al carrito. */
     @FXML
     private void agregarProducto() {
         Producto producto = tablaProductos.getSelectionModel().getSelectedItem();
@@ -103,6 +104,7 @@ public class ConfiteriaController implements PestanaCliente {
         mostrarCarrito();
     }
 
+    /** Botón para agregar el combo elegido al carrito. */
     @FXML
     private void agregarCombo() {
         Combo combo = tablaCombos.getSelectionModel().getSelectedItem();
@@ -115,6 +117,7 @@ public class ConfiteriaController implements PestanaCliente {
         mostrarCarrito();
     }
 
+    /** Botón para quitar del carrito el ítem seleccionado. */
     @FXML
     private void quitarItem() {
         ItemVendible item = tablaCarrito.getSelectionModel().getSelectedItem();
@@ -127,6 +130,7 @@ public class ConfiteriaController implements PestanaCliente {
         mostrarCarrito();
     }
 
+    /** Botón para pasar a la pestaña de resumen y pago. */
     @FXML
     private void irAResumen() {
         principal.irAResumen();

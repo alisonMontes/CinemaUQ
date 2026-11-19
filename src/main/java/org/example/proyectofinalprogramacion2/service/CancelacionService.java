@@ -41,8 +41,11 @@ public class CancelacionService {
 
     /**
      * El cliente cancela una de sus compras.
+     * Reembolso: 100 % con más de 24 h, 80 % entre 2 y 24 h y sin reembolso con menos de 2 h.
      *
      * @return valor devuelto a la tarjeta con que se pagó
+     * @throws AccesoDenegadoException si la compra no pertenece al cliente
+     * @throws CinemaUQException si faltan menos de 2 horas o la compra ya fue reembolsada
      */
     public double cancelarCompra(Cliente cliente, Compra compra, LocalDateTime ahora) throws CinemaUQException {
         if (!compra.getCliente().equals(cliente)) {
@@ -55,6 +58,7 @@ public class CancelacionService {
      * El administrador cancela una función; se reembolsa el 100 % de las compras pagadas con tarjeta.
      *
      * @return compras reembolsadas
+     * @throws AccesoDenegadoException si quien cancela no es administrador
      */
     public List<Compra> cancelarFuncion(Usuario actor, Funcion funcion, LocalDateTime ahora) throws CinemaUQException {
         ValidadorAcceso.exigirAdministrador(actor);

@@ -21,6 +21,7 @@ public class GeneradorReportes {
         this.estadisticas = Objects.requireNonNull(estadisticas, "El servicio de estadísticas es obligatorio");
     }
 
+    /** Devuelve el reporte TXT que corresponde al tipo indicado. */
     public ReporteExportable obtenerReporte(TipoReporte tipo) {
         Objects.requireNonNull(tipo, "El tipo de reporte es obligatorio");
         return switch (tipo) {

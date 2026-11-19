@@ -2,6 +2,7 @@ package org.example.proyectofinalprogramacion2.strategy;
 
 /**
  * Devuelve el 80 %: faltan desde 2 hasta 24 horas (inclusive) para la función.
+ * Patrón Strategy: estrategia concreta de reembolso.
  */
 // SRP: solo calcula el reembolso del 80 %.
 public class ReembolsoParcial implements ReembolsoStrategy {

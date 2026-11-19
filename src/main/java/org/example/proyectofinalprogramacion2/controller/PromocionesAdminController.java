@@ -77,6 +77,7 @@ public class PromocionesAdminController implements PestanaAdmin {
         }
     }
 
+    /** Botón para crear la promoción con su porcentaje y vigencia. */
     @FXML
     private void crear() {
         try {

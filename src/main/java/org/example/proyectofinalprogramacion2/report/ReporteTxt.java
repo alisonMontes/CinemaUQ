@@ -27,6 +27,12 @@ public abstract class ReporteTxt implements ReporteExportable {
         this.estadisticas = Objects.requireNonNull(estadisticas, "El servicio de estadísticas es obligatorio");
     }
 
+    /**
+     * Método plantilla: valida el periodo y arma el reporte siempre en el mismo orden.
+     * Recibe la fecha de generación como parámetro para poder probar el texto completo.
+     *
+     * @throws ReporteException si falta una fecha o la fecha inicial es posterior a la final
+     */
     @Override
     public final String generarTexto(LocalDate desde, LocalDate hasta, LocalDateTime ahora) throws ReporteException {
         if (desde == null || hasta == null || ahora == null) {
@@ -35,6 +41,7 @@ public abstract class ReporteTxt implements ReporteExportable {
         if (desde.isAfter(hasta)) {
             throw new ReporteException("La fecha inicial no puede ser posterior a la fecha final");
         }
+        // Paso que aporta cada subclase: las filas del reporte.
         TablaReporte tabla = construirTabla(desde, hasta);
 
         StringBuilder texto = new StringBuilder();
@@ -58,6 +65,7 @@ public abstract class ReporteTxt implements ReporteExportable {
         }
         texto.append(simple).append('\n');
         texto.append("Registros encontrados: ").append(tabla.getCantidadFilas()).append('\n');
+        // Los totales (otro paso de la subclase) solo se imprimen si hubo registros.
         if (!tabla.estaVacia()) {
             for (Map.Entry<String, String> total : calcularTotales(desde, hasta).entrySet()) {
                 texto.append(total.getKey()).append(": ").append(total.getValue()).append('\n');

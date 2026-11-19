@@ -26,6 +26,7 @@ public class RegistroController {
 
     private final AutenticacionService autenticacionService = new AutenticacionService();
 
+    /** Botón para registrar el cliente nuevo. */
     @FXML
     private void registrar() {
         String nombre = txtNombre.getText().trim();
@@ -56,6 +57,7 @@ public class RegistroController {
         }
     }
 
+    /** Botón para volver al inicio de sesión. */
     @FXML
     private void volver() {
         NavegadorVistas.cambiarVista(NavegadorVistas.ventanaDe(txtNombre), NavegadorVistas.LOGIN, "Iniciar sesión");

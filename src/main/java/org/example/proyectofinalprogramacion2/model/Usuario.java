@@ -18,6 +18,7 @@ public abstract class Usuario {
         setClave(clave);
     }
 
+    /** Indica si la clave coincide con la del usuario. */
     public boolean verificarClave(String clave) {
         return this.clave.equals(clave);
     }

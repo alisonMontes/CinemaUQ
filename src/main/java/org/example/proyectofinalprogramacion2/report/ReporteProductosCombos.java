@@ -10,6 +10,7 @@ import java.util.Map;
 
 /**
  * Productos y combos vendidos en el periodo, incluidos los canjeados con puntos (compras sin función).
+ * Patrón Template Method: subclase de ReporteTxt.
  */
 // SRP: solo presenta las unidades de confitería que calcula EstadisticaService.
 public class ReporteProductosCombos extends ReporteTxt {

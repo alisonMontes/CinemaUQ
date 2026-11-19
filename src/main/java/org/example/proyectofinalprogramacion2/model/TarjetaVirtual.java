@@ -21,6 +21,7 @@ public class TarjetaVirtual {
         this.movimientos = new ArrayList<>();
     }
 
+    /** Indica si la tarjeta puede usarse para pagar. */
     public boolean estaActiva() {
         return estado == EstadoTarjeta.ACTIVA;
     }

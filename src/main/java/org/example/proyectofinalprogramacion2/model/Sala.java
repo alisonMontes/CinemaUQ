@@ -20,6 +20,7 @@ public class Sala {
         this.asientos = new ArrayList<>();
     }
 
+    /** Agrega un asiento; no permite repetir fila y número. */
     public void agregarAsiento(Asiento asiento) {
         Validador.noNulo(asiento, "asiento");
         if (asientos.contains(asiento)) {
@@ -32,6 +33,7 @@ public class Sala {
         return asientos.remove(asiento);
     }
 
+    /** Busca un asiento por fila (sin importar mayúsculas) y número; devuelve null si no existe. */
     public Asiento buscarAsiento(String fila, int numero) {
         for (Asiento asiento : asientos) {
             if (asiento.getFila().equalsIgnoreCase(fila) && asiento.getNumero() == numero) {

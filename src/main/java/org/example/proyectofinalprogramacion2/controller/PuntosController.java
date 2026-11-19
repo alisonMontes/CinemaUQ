@@ -141,6 +141,7 @@ public class PuntosController implements PestanaCliente {
         }
     }
 
+    /** Botón para canjear una entrada por 1000 puntos. */
     @FXML
     private void canjearEntrada() {
         CarritoCompra carrito = principal.getCarrito();
@@ -163,6 +164,7 @@ public class PuntosController implements PestanaCliente {
         refrescar();
     }
 
+    /** Botón para canjear un producto por 400 puntos. */
     @FXML
     private void canjearProducto() {
         Producto producto = cmbProducto.getValue();
@@ -181,6 +183,7 @@ public class PuntosController implements PestanaCliente {
         refrescar();
     }
 
+    /** Botón para canjear un combo por 1200 puntos. */
     @FXML
     private void canjearCombo() {
         Combo combo = cmbCombo.getValue();

@@ -4,6 +4,7 @@ import org.example.proyectofinalprogramacion2.exception.CancelacionNoPermitidaEx
 
 /**
  * No permite cancelar: faltan menos de 2 horas para la función.
+ * Patrón Strategy: estrategia concreta que rechaza la cancelación.
  */
 // SRP: solo rechaza la cancelación.
 public class SinReembolso implements ReembolsoStrategy {

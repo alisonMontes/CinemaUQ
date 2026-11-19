@@ -21,10 +21,14 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * Pruebas de compra con tarjeta: cobro, ocupación de asientos y validaciones de saldo, tarjeta y asientos.
+ */
 class CompraServiceTest extends PruebaBase {
 
     private final CompraService compraService = new CompraService();
 
+    // Una compra exitosa descuenta el saldo y ocupa el asiento.
     @Test
     void testCompraExitosaDescuentaSaldoYOcupaAsiento() throws Exception {
         Cliente ana = cliente(ANA);
@@ -47,6 +51,7 @@ class CompraServiceTest extends PruebaBase {
         assertEquals(18_000, ultimo.getMonto(), 0.001);
     }
 
+    // Sin saldo suficiente no se cobra ni se ocupa ningún asiento.
     @Test
     void testCompraConSaldoInsuficienteNoCobraNiOcupaAsientos() {
         Cliente carlos = cliente(CARLOS);                       // saldo $114.800
@@ -71,6 +76,7 @@ class CompraServiceTest extends PruebaBase {
         }
     }
 
+    // Con la tarjeta bloqueada la compra lanza una excepción.
     @Test
     void testCompraConTarjetaBloqueadaLanzaExcepcion() {
         Cliente laura = cliente(LAURA);                         // tarjeta BLOQUEADA con saldo
@@ -85,6 +91,7 @@ class CompraServiceTest extends PruebaBase {
         assertTrue(funcion.estaDisponible(asiento));
     }
 
+    // Un asiento ya vendido no se vende otra vez en la misma función.
     @Test
     void testAsientoNoSeVendeDosVecesEnLaMismaFuncion() throws Exception {
         Funcion funcion = funcion("F004");
@@ -100,6 +107,7 @@ class CompraServiceTest extends PruebaBase {
         assertEquals(1, funcion.getAsientosOcupados().stream().filter(asiento::equals).count());
     }
 
+    // El mismo asiento sí se puede vender en otra función de la misma sala.
     @Test
     void testMismoAsientoSePuedeVenderEnOtraFuncionDeLaMismaSala() throws Exception {
         Funcion f004 = funcion("F004");

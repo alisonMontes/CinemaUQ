@@ -132,6 +132,7 @@ public class AsientosController implements PestanaCliente {
         }
     }
 
+    /** Botón para quitar del carrito todos los asientos elegidos. */
     @FXML
     private void limpiarSeleccion() {
         for (Asiento asiento : new ArrayList<>(principal.getCarrito().getAsientos())) {
@@ -140,6 +141,7 @@ public class AsientosController implements PestanaCliente {
         refrescar();
     }
 
+    /** Botón para pasar a confitería si hay al menos un asiento elegido. */
     @FXML
     private void continuar() {
         if (principal.getCarrito().getAsientos().isEmpty()) {

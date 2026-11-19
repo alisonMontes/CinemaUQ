@@ -142,6 +142,7 @@ public class CatalogoAdminController implements PestanaAdmin {
         }
     }
 
+    /** Botón para crear el producto con los datos del formulario. */
     @FXML
     private void crearProducto() {
         try {
@@ -159,6 +160,7 @@ public class CatalogoAdminController implements PestanaAdmin {
         }
     }
 
+    /** Botón para agregar el producto o combo elegido a los componentes del combo nuevo. */
     @FXML
     private void agregarComponente() {
         ItemVendible componente = cmbComponente.getValue();
@@ -169,6 +171,7 @@ public class CatalogoAdminController implements PestanaAdmin {
         listaComponentes.getItems().add(componente);
     }
 
+    /** Botón para quitar el componente seleccionado del combo nuevo. */
     @FXML
     private void quitarComponente() {
         int indice = listaComponentes.getSelectionModel().getSelectedIndex();
@@ -179,6 +182,7 @@ public class CatalogoAdminController implements PestanaAdmin {
         listaComponentes.getItems().remove(indice);
     }
 
+    /** Botón para crear el combo con sus componentes y su descuento. */
     @FXML
     private void crearCombo() {
         try {

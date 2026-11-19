@@ -8,6 +8,11 @@ import org.example.proyectofinalprogramacion2.exception.TipoAsientoInvalidoExcep
 // LSP: se usa donde se espere una Entrada o un ItemVendible sin cambiar el comportamiento esperado.
 public class EntradaAccesible extends Entrada {
 
+    /**
+     * Crea la entrada validando el tipo de asiento.
+     *
+     * @throws TipoAsientoInvalidoException si el asiento no es ACCESIBLE
+     */
     public EntradaAccesible(Funcion funcion, Asiento asiento) throws TipoAsientoInvalidoException {
         super(funcion, asiento);
         if (asiento.getTipo() != TipoAsiento.ACCESIBLE) {

@@ -1,3 +1,6 @@
+/**
+ * Módulo de CinemaUQ: requiere JavaFX y abre los paquetes con controladores a FXML.
+ */
 module org.example.proyectofinalprogramacion2 {
     requires javafx.controls;
     requires javafx.fxml;

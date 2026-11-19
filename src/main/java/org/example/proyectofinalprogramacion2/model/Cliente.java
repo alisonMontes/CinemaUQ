@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * Cliente del cine. Tiene una tarjeta virtual, una cuenta de puntos, su historial de compras
  * y sus notificaciones. Observa las funciones en las que tiene compras pagadas.
+ * Patrón Observer: es el observador concreto que recibe los avisos de cancelación.
  */
 // LSP: puede usarse donde se espere un Usuario (inicio de sesión, listados) sin romper su contrato.
 public class Cliente extends Usuario implements ObservadorFuncion {
@@ -42,6 +43,7 @@ public class Cliente extends Usuario implements ObservadorFuncion {
         return false;
     }
 
+    /** Guarda el aviso de la función como notificación del cliente. */
     @Override
     public void actualizar(Funcion funcion, String mensaje) {
         notificaciones.add(mensaje);

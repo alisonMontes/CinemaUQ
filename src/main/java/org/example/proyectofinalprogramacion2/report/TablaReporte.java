@@ -32,6 +32,7 @@ public class TablaReporte {
         return this;
     }
 
+    /** Agrega una fila; debe tener un valor por columna. */
     public void agregarFila(String... valores) {
         if (valores.length != encabezados.length) {
             throw new IllegalArgumentException("La fila debe tener " + encabezados.length + " valores");

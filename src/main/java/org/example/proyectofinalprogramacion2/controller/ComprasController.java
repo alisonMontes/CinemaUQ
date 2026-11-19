@@ -113,6 +113,7 @@ public class ComprasController implements PestanaCliente {
         lblMensaje.setText("");
     }
 
+    /** Botón para cancelar la compra elegida: muestra la política de reembolso y pide confirmación. */
     @FXML
     private void cancelarCompra() {
         Compra compra = tablaCompras.getSelectionModel().getSelectedItem();

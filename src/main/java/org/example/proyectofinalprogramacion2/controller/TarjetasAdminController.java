@@ -115,6 +115,7 @@ public class TarjetasAdminController implements PestanaAdmin {
         return cliente;
     }
 
+    /** Botón para recargar la tarjeta del cliente seleccionado. */
     @FXML
     private void recargar() {
         Cliente cliente = clienteElegido();
@@ -132,6 +133,7 @@ public class TarjetasAdminController implements PestanaAdmin {
         }
     }
 
+    /** Botón para activar la tarjeta del cliente seleccionado. */
     @FXML
     private void activar() {
         Cliente cliente = clienteElegido();
@@ -147,6 +149,7 @@ public class TarjetasAdminController implements PestanaAdmin {
         }
     }
 
+    /** Botón para bloquear la tarjeta del cliente seleccionado (pide confirmación). */
     @FXML
     private void bloquear() {
         Cliente cliente = clienteElegido();

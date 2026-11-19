@@ -8,6 +8,7 @@ import org.example.proyectofinalprogramacion2.model.Funcion;
 
 /**
  * Crea entradas generales (exige asiento NORMAL).
+ * Patrón Factory Method: fábrica concreta de EntradaGeneral.
  */
 // SRP: solo crea entradas generales.
 public class EntradaGeneralFactory extends EntradaFactory {

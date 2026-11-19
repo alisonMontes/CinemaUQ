@@ -24,6 +24,7 @@ public class Combo implements ItemVendible {
         this.componentes = new ArrayList<>();
     }
 
+    /** Agrega un producto u otro combo; no acepta entradas ni el mismo combo. */
     public void agregarComponente(ItemVendible componente) {
         Validador.noNulo(componente, "componente");
         if (componente == this) {
@@ -58,6 +59,7 @@ public class Combo implements ItemVendible {
         return getPrecioRegular() * (100 - porcentajeDescuento) / 100;
     }
 
+    /** Diferencia entre el precio regular y el precio del combo. */
     public double getAhorro() {
         return getPrecioRegular() - getPrecio();
     }

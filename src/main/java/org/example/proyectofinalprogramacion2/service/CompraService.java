@@ -47,6 +47,9 @@ public class CompraService {
      * tarjeta del cliente. Al pagar, el cliente queda como observador de la función.
      *
      * @param promocion puede ser null
+     * @param ahora fecha y hora de la compra; se recibe como parámetro para poder probarla
+     * @throws CinemaUQException si la función no está disponible, un asiento está ocupado,
+     *                           la promoción no está vigente o la tarjeta no permite pagar
      */
     public Compra comprarEntradas(Cliente cliente, Funcion funcion, List<Asiento> asientos,
                                   List<Producto> productos, List<Combo> combos, Promocion promocion,
@@ -65,6 +68,7 @@ public class CompraService {
      * ocupar asientos ni cobrar. Sirve para mostrar subtotales antes de pagar.
      *
      * @param promocion puede ser null
+     * @throws CinemaUQException si la compra no es válida (por ejemplo, promoción no vigente)
      */
     public double calcularTotal(Cliente cliente, Funcion funcion, List<Asiento> asientos,
                                 List<Producto> productos, List<Combo> combos, Promocion promocion,
@@ -83,6 +87,7 @@ public class CompraService {
                 .promocion(promocion);
         if (asientos != null) {
             for (Asiento asiento : asientos) {
+                // Factory Method: la fábrica de la entrada se elige según el tipo de asiento.
                 builder.agregarEntrada(EntradaFactory.segunAsiento(asiento).crearEntrada(funcion, asiento));
             }
         }
@@ -103,6 +108,9 @@ public class CompraService {
 
     /**
      * Canjea una entrada (con su asiento) por ConfiguracionPuntos.PUNTOS_ENTRADA puntos.
+     * Regla de canje: entrada 1000 puntos, usando primero los más próximos a vencer.
+     *
+     * @throws CinemaUQException si la función no está disponible, el asiento está ocupado o los puntos no alcanzan
      */
     public Compra redimirEntrada(Cliente cliente, Funcion funcion, Asiento asiento, LocalDateTime ahora)
             throws CinemaUQException {
@@ -124,6 +132,9 @@ public class CompraService {
 
     /**
      * Canjea un producto por ConfiguracionPuntos.PUNTOS_PRODUCTO puntos (compra sin función).
+     * Regla de canje: producto 400 puntos.
+     *
+     * @throws CinemaUQException si los puntos vigentes no alcanzan
      */
     public Compra redimirProducto(Cliente cliente, Producto producto, LocalDateTime ahora) throws CinemaUQException {
         Objects.requireNonNull(producto, "El producto es obligatorio");
@@ -133,6 +144,9 @@ public class CompraService {
 
     /**
      * Canjea un combo por ConfiguracionPuntos.PUNTOS_COMBO puntos (compra sin función).
+     * Regla de canje: combo 1200 puntos.
+     *
+     * @throws CinemaUQException si los puntos vigentes no alcanzan
      */
     public Compra redimirCombo(Cliente cliente, Combo combo, LocalDateTime ahora) throws CinemaUQException {
         Objects.requireNonNull(combo, "El combo es obligatorio");
@@ -152,6 +166,7 @@ public class CompraService {
     private Compra canjear(Compra.Builder builder, int puntos, LocalDateTime ahora) throws CinemaUQException {
         Compra compra = builder.build();
         Cliente cliente = compra.getCliente();
+        // Primero se descuentan los puntos: si no alcanzan, la compra no se registra.
         puntosService.redimir(cliente, puntos, ahora.toLocalDate());
         compra.confirmarCanje(puntos);
         cliente.agregarCompra(compra);

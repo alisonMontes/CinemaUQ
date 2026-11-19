@@ -49,6 +49,12 @@ public class ProcesoCompraFacade {
      * Pasos: validar función y asientos, validar el medio de pago, pasar la compra a PAGADA,
      * cobrar (registra el movimiento), ocupar los asientos, acumular puntos, registrar la compra
      * y suscribir al cliente a la función.
+     *
+     * @param ahora fecha y hora de la compra; se recibe como parámetro para poder probarla
+     * @return la compra ya PAGADA
+     * @throws FuncionNoDisponibleException si la función está cancelada o ya empezó
+     * @throws AsientoNoDisponibleException si un asiento está ocupado o repetido
+     * @throws CinemaUQException si la tarjeta está bloqueada o no tiene saldo
      */
     public Compra comprar(Compra compra, MedioPago medioPago, LocalDateTime ahora) throws CinemaUQException {
         Objects.requireNonNull(compra, "La compra es obligatoria");
@@ -61,6 +67,7 @@ public class ProcesoCompraFacade {
         Funcion funcion = compra.getFuncion();
         validarFuncionDisponible(funcion, ahora);
         validarAsientos(compra);
+        // Se valida todo antes de cobrar para no dejar la compra a medias.
         medioPago.validarPago(compra.getTotal());
 
         compra.confirmarPago(medioPago);
@@ -79,8 +86,10 @@ public class ProcesoCompraFacade {
 
     /**
      * El cliente cancela una compra. La estrategia se elige según el tiempo que falta para la función.
+     * Reembolso: 100 % con más de 24 h, 80 % entre 2 y 24 h y sin reembolso con menos de 2 h.
      *
      * @return valor reembolsado a la tarjeta con la que se pagó
+     * @throws CinemaUQException si faltan menos de 2 horas o la compra ya fue reembolsada
      */
     public double cancelarCompra(Compra compra, LocalDateTime ahora) throws CinemaUQException {
         Objects.requireNonNull(compra, "La compra es obligatoria");
@@ -93,6 +102,7 @@ public class ProcesoCompraFacade {
      * de cada compra PAGADA con tarjeta.
      *
      * @return compras reembolsadas
+     * @throws FuncionNoDisponibleException si la función ya estaba cancelada
      */
     public List<Compra> cancelarFuncion(Funcion funcion, LocalDateTime ahora) throws CinemaUQException {
         Objects.requireNonNull(funcion, "La función es obligatoria");
@@ -102,7 +112,9 @@ public class ProcesoCompraFacade {
         funcion.cancelar();
 
         List<Compra> reembolsadas = new ArrayList<>();
+        // La función ya quedó CANCELADA, así que el selector devuelve el reembolso del 100 %.
         ReembolsoStrategy estrategia = selectorReembolso.seleccionar(funcion, ahora);
+        // Solo se reembolsan las compras PAGADAS con tarjeta de esta función.
         for (Compra compra : new ArrayList<>(cinema.getCompras())) {
             if (funcion.equals(compra.getFuncion()) && compra.getEstado() == EstadoCompra.PAGADA
                     && !compra.isPagadaConPuntos()) {
@@ -115,6 +127,10 @@ public class ProcesoCompraFacade {
 
     // ---------- Pasos internos ----------
 
+    /**
+     * Aplica la estrategia, devuelve el dinero, libera asientos, anula puntos sin usar
+     * y quita al cliente como observador si ya no tiene compras pagadas en la función.
+     */
     private double reembolsar(Compra compra, ReembolsoStrategy estrategia, LocalDateTime ahora)
             throws CinemaUQException {
         double monto = compra.reembolsar(estrategia);
@@ -123,12 +139,14 @@ public class ProcesoCompraFacade {
                     + " - " + estrategia.getDescripcion(), ahora);
         }
         Funcion funcion = compra.getFuncion();
+        // Si la función fue cancelada sus asientos no se liberan: ya no se venderá.
         if (funcion.getEstado() != EstadoFuncion.CANCELADA) {
             for (Entrada entrada : compra.getEntradas()) {
                 funcion.liberarAsiento(entrada.getAsiento());
             }
         }
         Cliente cliente = compra.getCliente();
+        // Los puntos de esta compra solo se anulan si siguen sin usar.
         cliente.getCuentaPuntos().anularPuntosDe(compra);
         if (!cliente.tieneCompraPagadaEn(funcion)) {
             funcion.eliminarObservador(cliente);
@@ -148,6 +166,7 @@ public class ProcesoCompraFacade {
         Set<Asiento> elegidos = new HashSet<>();
         for (Entrada entrada : compra.getEntradas()) {
             Asiento asiento = entrada.getAsiento();
+            // Falla si el asiento se repite en la compra o ya está ocupado en la función.
             if (!elegidos.add(asiento) || !funcion.estaDisponible(asiento)) {
                 throw new AsientoNoDisponibleException("El asiento " + asiento.getCodigo()
                         + " no está disponible en la función " + funcion.getCodigo());
@@ -155,6 +174,7 @@ public class ProcesoCompraFacade {
         }
     }
 
+    /** Regla de puntos: 1 punto por cada $100 pagados; la acumulación vence al año. */
     private void acumularPuntos(Compra compra, LocalDateTime ahora) {
         int puntos = ConfiguracionPuntos.calcularPuntos(compra.getTotal());
         if (puntos > 0) {

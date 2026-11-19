@@ -75,6 +75,7 @@ public class ReportesAdminController implements PestanaAdmin {
         }
     }
 
+    /** Botón para generar el texto del reporte elegido. */
     @FXML
     private void generar() {
         if (generarTexto(LocalDateTime.now()) != null) {
@@ -82,6 +83,7 @@ public class ReportesAdminController implements PestanaAdmin {
         }
     }
 
+    /** Botón para exportar el reporte a un archivo TXT. */
     @FXML
     private void exportar() {
         LocalDateTime ahora = LocalDateTime.now();

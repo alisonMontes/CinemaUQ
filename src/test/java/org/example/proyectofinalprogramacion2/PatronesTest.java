@@ -26,6 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Composite (combos), Decorator (promociones) y Factory Method (entradas).
+ * Valida el precio de los combos, el descuento según la vigencia y la fábrica según el asiento.
  */
 class PatronesTest extends PruebaBase {
 
@@ -34,6 +35,7 @@ class PatronesTest extends PruebaBase {
 
     // ---------- Composite ----------
 
+    // El combo cuesta la suma de sus componentes menos su descuento.
     @Test
     void testComboAplicaDescuentoSobreSusComponentes() {
         Combo combo = new Combo("TC1", "Combo prueba", 10);
@@ -45,6 +47,7 @@ class PatronesTest extends PruebaBase {
         assertEquals(1_600, combo.getAhorro(), 0.001);
     }
 
+    // Un combo dentro de otro combo calcula su precio de forma recursiva.
     @Test
     void testComboDentroDeOtroComboCalculaPrecioRecursivo() {
         Combo interno = new Combo("TC1", "Interno", 10);
@@ -58,6 +61,7 @@ class PatronesTest extends PruebaBase {
         assertEquals(15_520, externo.getPrecio(), 0.001);
     }
 
+    // Un combo no puede agregarse a sí mismo como componente.
     @Test
     void testComboNoPuedeContenerseASiMismo() {
         Combo combo = new Combo("TC1", "Combo", 10);
@@ -66,6 +70,7 @@ class PatronesTest extends PruebaBase {
 
     // ---------- Decorator ----------
 
+    // Con la promoción vigente se descuenta el porcentaje al precio del ítem.
     @Test
     void testDecoratorAplicaPromocionVigente() {
         Promocion vigente = new Promocion("TP1", "Vigente", 20, HOY.minusDays(1), HOY.plusDays(1));
@@ -76,6 +81,7 @@ class PatronesTest extends PruebaBase {
         assertEquals(10_000, crispetas.getPrecio(), 0.001, "El ítem original no cambia");
     }
 
+    // Fuera de la vigencia el ítem conserva su precio original.
     @Test
     void testDecoratorNoAplicaPromocionNoVigente() {
         Promocion vencida = new Promocion("TP1", "Vencida", 20, HOY.minusDays(10), HOY.minusDays(1));
@@ -85,6 +91,7 @@ class PatronesTest extends PruebaBase {
         assertEquals(10_000, new PromocionDecorator(crispetas, futura, HOY).getPrecio(), 0.001);
     }
 
+    // La promoción aplica también el primer y el último día de su vigencia.
     @Test
     void testDecoratorRespetaLosDiasLimiteDeLaPromocion() {
         Promocion promocion = new Promocion("TP1", "Límites", 20, HOY, HOY.plusDays(5));
@@ -95,6 +102,7 @@ class PatronesTest extends PruebaBase {
         assertEquals(10_000, new PromocionDecorator(crispetas, promocion, HOY.minusDays(1)).getPrecio(), 0.001);
     }
 
+    // Comprar con una promoción no vigente lanza PromocionNoVigenteException.
     @Test
     void testCompraConPromocionNoVigenteLanzaExcepcion() {
         Promocion navidad = cinema.buscarPromocion("PM03");          // empieza en 30 días
@@ -107,6 +115,7 @@ class PatronesTest extends PruebaBase {
 
     // ---------- Factory Method ----------
 
+    // La fábrica general no crea entradas para un asiento accesible.
     @Test
     void testFabricaGeneralRechazaAsientoAccesible() {
         Funcion funcion = funcion("F001");
@@ -117,6 +126,7 @@ class PatronesTest extends PruebaBase {
                 () -> new EntradaGeneralFactory().crearEntrada(funcion, accesible));
     }
 
+    // La fábrica accesible no crea entradas para un asiento normal.
     @Test
     void testFabricaAccesibleRechazaAsientoNormal() {
         Funcion funcion = funcion("F001");
@@ -127,6 +137,7 @@ class PatronesTest extends PruebaBase {
                 () -> new EntradaAccesibleFactory().crearEntrada(funcion, normal));
     }
 
+    // segunAsiento elige la fábrica y el tipo de entrada según el asiento.
     @Test
     void testSegunAsientoEligeLaFabricaYLaEntradaCorrectas() throws Exception {
         Funcion funcion = funcion("F001");

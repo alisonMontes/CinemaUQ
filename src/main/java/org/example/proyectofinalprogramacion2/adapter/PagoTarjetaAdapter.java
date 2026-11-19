@@ -21,6 +21,12 @@ public class PagoTarjetaAdapter implements MedioPago {
         this.tarjeta = Objects.requireNonNull(tarjeta, "La tarjeta es obligatoria");
     }
 
+    /**
+     * Verifica que la tarjeta esté ACTIVA y tenga saldo suficiente.
+     *
+     * @throws TarjetaInactivaException si la tarjeta está bloqueada
+     * @throws SaldoInsuficienteException si el saldo no alcanza
+     */
     @Override
     public void validarPago(double monto) throws TarjetaInactivaException, SaldoInsuficienteException {
         if (!tarjeta.estaActiva()) {
@@ -32,6 +38,7 @@ public class PagoTarjetaAdapter implements MedioPago {
         }
     }
 
+    /** Valida, descuenta el saldo y registra un movimiento PAGO. */
     @Override
     public void cobrar(double monto, String concepto, LocalDateTime fecha)
             throws TarjetaInactivaException, SaldoInsuficienteException {
@@ -40,6 +47,7 @@ public class PagoTarjetaAdapter implements MedioPago {
         tarjeta.agregarMovimiento(new MovimientoTarjeta(TipoMovimiento.PAGO, fecha, monto, concepto));
     }
 
+    /** Suma el monto al saldo (aunque la tarjeta esté bloqueada) y registra un movimiento REEMBOLSO. */
     @Override
     public void reembolsar(double monto, String concepto, LocalDateTime fecha) {
         tarjeta.setSaldo(tarjeta.getSaldo() + monto);

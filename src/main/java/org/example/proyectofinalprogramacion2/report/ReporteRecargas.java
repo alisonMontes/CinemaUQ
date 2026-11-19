@@ -11,6 +11,7 @@ import java.util.Map;
 
 /**
  * Recargas de tarjeta realizadas por el administrador en el periodo.
+ * Patrón Template Method: subclase de ReporteTxt.
  */
 // SRP: solo presenta las recargas que consulta EstadisticaService.
 public class ReporteRecargas extends ReporteTxt {

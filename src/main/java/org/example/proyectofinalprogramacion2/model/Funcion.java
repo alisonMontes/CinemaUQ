@@ -42,6 +42,7 @@ public class Funcion {
 
     // ---------- Observer ----------
 
+    /** Suscribe un observador a la función (sin repetirlo). */
     public void agregarObservador(ObservadorFuncion observador) {
         Validador.noNulo(observador, "observador");
         if (!observadores.contains(observador)) {
@@ -53,7 +54,9 @@ public class Funcion {
         return observadores.remove(observador);
     }
 
+    /** Avisa a todos los observadores con el mensaje indicado (patrón Observer). */
     public void notificarObservadores(String mensaje) {
+        // Se recorre una copia por si la lista de observadores cambia durante el aviso.
         for (ObservadorFuncion observador : new ArrayList<>(observadores)) {
             observador.actualizar(this, mensaje);
         }
@@ -61,6 +64,8 @@ public class Funcion {
 
     /**
      * El cine cancela la función y avisa a sus observadores.
+     *
+     * @throws IllegalStateException si la función ya estaba cancelada
      */
     public void cancelar() {
         if (estado == EstadoFuncion.CANCELADA) {
@@ -74,6 +79,7 @@ public class Funcion {
 
     /**
      * Una función se puede vender o canjear si está PROGRAMADA y todavía no ha empezado.
+     * Recibe la hora actual como parámetro para poder probarlo.
      */
     public boolean estaDisponibleParaVenta(LocalDateTime ahora) {
         return estado == EstadoFuncion.PROGRAMADA && ahora.isBefore(getFechaHora());
@@ -89,10 +95,16 @@ public class Funcion {
         return LocalDateTime.of(fecha, hora);
     }
 
+    /** Indica si el asiento es de la sala y está libre en esta función. */
     public boolean estaDisponible(Asiento asiento) {
         return sala.contieneAsiento(asiento) && !asientosOcupados.contains(asiento);
     }
 
+    /**
+     * Marca el asiento como ocupado en esta función.
+     *
+     * @throws AsientoNoDisponibleException si el asiento ya estaba ocupado
+     */
     public void ocuparAsiento(Asiento asiento) throws AsientoNoDisponibleException {
         Validador.noNulo(asiento, "asiento");
         if (!sala.contieneAsiento(asiento)) {
@@ -105,10 +117,12 @@ public class Funcion {
         asientosOcupados.add(asiento);
     }
 
+    /** Libera el asiento (por ejemplo, al reembolsar una compra). */
     public boolean liberarAsiento(Asiento asiento) {
         return asientosOcupados.remove(asiento);
     }
 
+    /** Asientos de la sala que siguen libres en esta función. */
     public List<Asiento> getAsientosDisponibles() {
         List<Asiento> disponibles = new ArrayList<>();
         for (Asiento asiento : sala.getAsientos()) {

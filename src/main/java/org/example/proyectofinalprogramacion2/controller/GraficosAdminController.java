@@ -55,6 +55,7 @@ public class GraficosAdminController implements PestanaAdmin {
         actualizar();
     }
 
+    /** Botón para volver a dibujar los gráficos con el periodo elegido. */
     @FXML
     private void actualizar() {
         try {
